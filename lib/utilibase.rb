@@ -12,7 +12,7 @@ require 'securerandom'
 # minimum SQLite version
 # NOTE: Make sure the following command is on a single line by itself.
 SQLITE_MIN_VERSION = '3.11.0'
-SQLITE_GEM_MIN_VERSION = '1.3.13'
+SQLITE_GEM_MIN_VERSION = '1.3.1'
 
 #
 # configuration

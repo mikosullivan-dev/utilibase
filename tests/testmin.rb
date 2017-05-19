@@ -60,12 +60,13 @@ module TestMin
 				
 				# submit messages
 				'submit-hold' => 'Submitting...',
-				'submit-request' => 'May this script submit these test results to [[title]]?',
 				'submit-success' => 'Test results successfully submitted.',
 				'submit-failure' => 'Submission of test results failed. Errors: [[errors]]',
 				
 				# Idocs details about submitting results
-				'submit-details' => <<~TEXT,
+				'submit-request' => <<~TEXT,
+				May this script submit these test results to [[title]]?
+				
 				With your permission, the results of these tests will be
 				submitted to the Idocs TestMin service where they will be
 				publicly available. In addition to the results of the tests,
@@ -75,7 +76,7 @@ module TestMin
 				TEXT
 				
 				# prompts
-				'ynd' => '[Yes|No|Details]',
+				'yn' => '[Yes|No]',
 			},
 			
 			# Spanish
@@ -651,18 +652,18 @@ module TestMin
 	
 	
 	#---------------------------------------------------------------------------
-	# yes_no_details
+	# yes_no
 	#
-	def TestMin.yes_no_details(prompt)
+	def TestMin.yes_no(prompt)
 		# TestMin.hr(__method__.to_s)
 		
 		# output prompt
 		print prompt.chomp + ' '
 		
-		# get response until it's y, n, or d
+		# get response until it's y or n
 		loop do
 			# output prompt
-			print TestMin.message('ynd') + ' '
+			print TestMin.message('yn') + ' '
 			
 			# get response
 			response = $stdin.gets.chomp
@@ -673,8 +674,10 @@ module TestMin
 			response = response[0,1]
 			
 			# if we got one of the matching letters, we're done
-			if response.match(/\A[ynd]/)
-				return response
+			if response == 'y'
+				return true
+			elsif response == 'n'
+				return false
 			end
 		end
 		
@@ -683,7 +686,7 @@ module TestMin
 		return response
 	end
 	#
-	# yes_no_details
+	# yes_no
 	#---------------------------------------------------------------------------
 	
 	
@@ -700,18 +703,7 @@ module TestMin
 		)
 		
 		# get results of user prompt
-		loop do
-			response = TestMin.yes_no_details(prompt)
-			
-			# if yes, return true
-			if response == 'y'
-				return true
-			elsif response == 'n'
-				return false
-			else
-				puts "\n" + TestMin.message('submit-details') + "\n"
-			end
-		end
+		return TestMin.yes_no(prompt)
 	end
 	#
 	# submit_ask
