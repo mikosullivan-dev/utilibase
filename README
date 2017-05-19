@@ -11,11 +11,9 @@ on those systems you'll need the following software installed:
 
 - Ruby
 - SQLite3
-- the ruby gem for SQLite3
-
-Install
+- the Ruby gem for SQLite3
 
 Testing
 
-To run the tests, download change into the tests directory. Run ./testmin.rb.
-The tests should run and you should be prompted about submitting the results.
+To run the tests, change into the "tests" directory. Run ./testmin.rb. The tests
+should run and you should be prompted about submitting the results.
