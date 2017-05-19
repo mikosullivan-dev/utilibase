@@ -1,0 +1,12 @@
+{
+	"dir-order" : 1100,
+	"files" : [
+		"reset-db-dir.rb",
+		"jhash.rb",
+		"timestamps.rb",
+		"links.rb",
+		"version-uuid.rb",
+		"record-uuid.rb",
+		"update-stat.rb"
+	]
+}

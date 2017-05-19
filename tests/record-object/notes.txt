@@ -1,0 +1,13 @@
+record object
+
+- does not hold onto any values
+	- grabs values from the database
+	- stores values into the database
+
+- knows about the utilibase object
+- utilibase object does not know about record
+- can return entire record or specific field
+- can store entire record or specific field
+- whenever it stores a record, it also updates links
+- a new record is marked as new
+- an updated record is marked as updated

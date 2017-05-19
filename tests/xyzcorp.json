@@ -1,0 +1,86 @@
+[
+	{
+		"$uuid":"de47fd1b-cd9a-4f49-b40b-87ec251030ce",
+		"id":"joe",
+		"$class":"i",
+		"phones" : [
+			{
+				"$uuid":"1e0e5fc6-5e72-4d00-b535-90fb0dd425e3",
+				"id":"joe-home-phone",
+				"number":"555-333-1212",
+				"location":"home"
+			},
+			{
+				"$uuid":"72689ced-e4a3-4df4-bde6-e9d11101743b",
+				"id":"joe-cell-phone",
+				"number":"555-123-1212",
+				"location":"cell",
+				"properties" : {
+					"$uuid":"32efcdaf-8095-4498-9c9a-411f28004fbc",
+					"id":"joe-cell-phone-properties",
+					"brand":{"$uuid":"4ac8a116-6501-414a-9516-e7889b2b01a8"}
+				}
+			}
+		]
+	},
+	
+	{
+		"$uuid":"c24beb90-bdc4-4e39-905c-e3e2c3650f4e",
+		"id":"mary",
+		"$class":"i",
+		"phones" : [
+			{
+				"$uuid":"fc2fa53b-0b72-4a6e-af7d-4f8643431d68",
+				"self":{"$uuid":"fc2fa53b-0b72-4a6e-af7d-4f8643431d68"},
+				"id":"mary-home-phone",
+				"number":"555-333-1212",
+				"location":"home",
+				"properties" : {
+					"$uuid":"cbea8b43-bde7-4e71-9f9c-fb6352319b0d",
+					"id":"mary-home-phone-properties",
+					"make": {
+						"$uuid":"d27a7680-ae86-423d-a464-5db8a25913eb",
+						"id":"mary-home-phone-make",
+						"brand":{"$uuid":"4ac8a116-6501-414a-9516-e7889b2b01a8"}
+					}
+				}
+			},
+			{
+				"$uuid":"9bd5637b-16b8-43e8-8de6-a5082748876f",
+				"id":"mary-cell-phone",
+				"number":"555-444-1212",
+				"location":"cell"
+			}
+		]
+	},
+	
+	{
+		"$uuid":"26433e06-67f8-4ebb-a0d4-01cf3ef183e8",
+		"id":"deleted-cell-phone",
+		"number":"555-000-0000",
+		"location":"cell",
+		"delete":true
+	},
+	
+	{
+		"$uuid":"a9c3f00f-5d81-4bb1-9261-cf8084e666ca",
+		"id":"nobodys-cell-phone",
+		"number":"555-000-0000",
+		"location":"cell",
+		"properties" : {
+			"$uuid":"2a224acb-72e8-4f6f-a340-d235cf953c0d",
+			"id":"nobodys-cell-phone-properties",
+			"colors" : {
+				"$uuid":"c3cf6615-48a1-4224-b7f6-f5c033ccd465",
+				"trim":"red",
+				"background":"yellow"
+			}
+		}
+	},
+	
+	{
+		"$uuid":"4ac8a116-6501-414a-9516-e7889b2b01a8",
+		"id":"redstone",
+		"brand-name":"Redstone"
+	}
+]

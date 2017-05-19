@@ -1,0 +1,8 @@
+{
+	"dir-order" : 1300,
+	"files" : [
+		"instantiate.rb",
+		"new-update.rb",
+		"delete.rb"
+	]
+}

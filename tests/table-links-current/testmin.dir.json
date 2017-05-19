@@ -1,0 +1,8 @@
+{
+	"dir-order" : 900,
+	"files" : [
+		"src-uuid.rb",
+		"tgt-uuid.rb",
+		"src-is-independent.rb"
+	]
+}

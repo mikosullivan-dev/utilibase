@@ -1,0 +1,8 @@
+{
+	"dir-order" : 1200,
+	"files" : [
+		"reset-db-dir.rb",
+		"instantiate.rb",
+		"dbh.rb"
+	]
+}

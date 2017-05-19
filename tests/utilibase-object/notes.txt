@@ -1,0 +1,11 @@
+utilibase object
+
+- instantiate
+	- path required
+	- untainted path
+	- file exists
+
+- methods
+	- dbh
+		- dbh property does not have to be set before dbh is called
+		- same dbh object is returned each call

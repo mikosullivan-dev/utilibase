@@ -1,0 +1,11 @@
+{
+	"dir-order" : 1500,
+	"files" : [
+		"trace.rb",
+		"trace.mary-home-phone.rb",
+		"trace.redstone.rb",
+		"unlinks.rb",
+		"unlinked.rb",
+		"purge.rb"
+	]
+}

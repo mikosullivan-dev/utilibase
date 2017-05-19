@@ -1,0 +1,14 @@
+{
+	"dir-order" : 800,
+	"files" : [
+		"reset-db-dir.rb",
+		"record-uuid.rb",
+		"jhash.rb",
+		"update-stat.rb",
+		"links.rb",
+		"timestamps.rb",
+		"valid-entry.rb",
+		"dependency.rb",
+		"unlinked.rb"
+	]
+}

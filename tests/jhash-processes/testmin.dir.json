@@ -1,0 +1,10 @@
+{
+	"dir-order" : 600,
+	"files" : [
+		"unravel.rb",
+		"extract-uuids.rb",
+		"merge-arrays.rb",
+		"hash-command.rb",
+		"merge-jhashes.rb"
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"dir-order" : 700,
+	"files" : [
+		"reset-db-dir.rb",
+		"initialize.rb"
+	]
+}
