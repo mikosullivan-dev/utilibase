@@ -36,7 +36,6 @@ module TestMin
 	# settings
 	@settings = nil
 	
-	
 	#---------------------------------------------------------------------------
 	# DefaultSettings
 	#
@@ -45,6 +44,20 @@ module TestMin
 		'submit-site' => {
 			'url' => 'https://testmin.idocs.com/submit',
 			'title' => 'Idocs Testmin',
+			'messages' => {
+				'en' => {
+					'submit-request' => <<~TEXT,
+					May this script submit these test results to [[title]]?
+					
+					With your permission, the results of these tests will be
+					submitted to the Idocs TestMin service where they will be
+					publicly available. In addition to the results of the tests,
+					the only information about your system will be the operating
+					system and version, the version of Ruby, and the version of
+					TestMin.
+					TEXT
+				}
+			}
 		},
 		
 		# messages
@@ -62,18 +75,6 @@ module TestMin
 				'submit-hold' => 'Submitting...',
 				'submit-success' => 'Test results successfully submitted.',
 				'submit-failure' => 'Submission of test results failed. Errors: [[errors]]',
-				
-				# Idocs details about submitting results
-				'submit-request' => <<~TEXT,
-				May this script submit these test results to [[title]]?
-				
-				With your permission, the results of these tests will be
-				submitted to the Idocs TestMin service where they will be
-				publicly available. In addition to the results of the tests,
-				the only information about your system will be the operating
-				system and version, the version of Ruby, and the version of
-				TestMin.
-				TEXT
 				
 				# prompts
 				'yn' => '[Yes|No]',
@@ -658,7 +659,7 @@ module TestMin
 		# TestMin.hr(__method__.to_s)
 		
 		# output prompt
-		print prompt.chomp + ' '
+		print prompt
 		
 		# get response until it's y or n
 		loop do
@@ -699,8 +700,9 @@ module TestMin
 		# get prompt
 		prompt = TestMin.message(
 			'submit-request',
-			TestMin.settings['submit-site']
-		)
+			'fields'=>TestMin.settings['submit-site'],
+			'root' => TestMin.settings['submit-site']['messages'],
+		) + "\n"
 		
 		# get results of user prompt
 		return TestMin.yes_no(prompt)
@@ -784,11 +786,13 @@ module TestMin
 	#---------------------------------------------------------------------------
 	# message
 	#
-	def TestMin.message(message_id, field_vals={})
+	def TestMin.message(message_id, opts={})
 		# TestMin.hr(__method__.to_s)
 		
-		# get message
-		templates = TestMin.settings['messages']
+		# default options
+		opts = {'fields'=>{}, 'root'=>TestMin.settings['messages']}.merge(opts)
+		fields = opts['fields']
+		root = opts['root']
 		
 		# TESTING
 		# @human_languages = ['xx']
@@ -796,14 +800,14 @@ module TestMin
 		# loop through languages
 		@human_languages.each do |language|
 			# if the template exists in this language
-			if templates[language].is_a?(Hash)
+			if root[language].is_a?(Hash)
 				# get tmeplate
-				template = templates[language][message_id]
+				template = root[language][message_id]
 				
 				# if we actually got a template, process it
 				if template.is_a?(String)
 					# field substitutions
-					field_vals.each do |key, val|
+					fields.each do |key, val|
 						# TODO: need to meta quote the key name
 						template = template.gsub(/\[\[\s*#{key}\s*\]\]/i, val.to_s)
 					end
