@@ -4,6 +4,18 @@ May 19, 2017
 This is a very early release of Utilibase. This release is more about testing
 the testmin.rb script than testing Utilibase itself.
 
-To run the tests, download an unzip this project. Change into the tests
-directory. Run ./testmin.rb. The tests should run and you should be prompted
-about submitting the results.
+Prerequisites
+
+Utilibase is designed for Unix derivative systems such as Linux and BSD. To run
+on those systems you'll need the following software installed:
+
+- Ruby
+- SQLite3
+- the ruby gem for SQLite3
+
+Install
+
+Testing
+
+To run the tests, download change into the tests directory. Run ./testmin.rb.
+The tests should run and you should be prompted about submitting the results.
