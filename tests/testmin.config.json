@@ -1,4 +1,4 @@
 {
-	"submit" : true,
+	"submit" : {"request":true},
 	"project-id" : "HCt7wg1f"
 }

@@ -40,21 +40,27 @@ module TestMin
 	# DefaultSettings
 	#
 	DefaultSettings = {
-		'submit' => false,
-		'submit-site' => {
+		'submit' => {
+			'request' => false,
 			'url' => 'https://testmin.idocs.com/submit',
 			'title' => 'Idocs Testmin',
 			'messages' => {
 				'en' => {
+					# request to submit results
 					'submit-request' => <<~TEXT,
 					May this script submit these test results to [[title]]?
+					The results will be submitted to the Idocs TestMin service
+					where they will be publicly available. In addition to the
+					test results, the only information about your system will be
+					the operating system and version, the version of Ruby, and
+					the version of TestMin.
+					TEXT
 					
-					With your permission, the results of these tests will be
-					submitted to the Idocs TestMin service where they will be
-					publicly available. In addition to the results of the tests,
-					the only information about your system will be the operating
-					system and version, the version of Ruby, and the version of
-					TestMin.
+					# request to add email address
+					'email-request' => <<~TEXT,
+					Would you like to send your email address? Your email will
+					not be displayed publicly. You will only be contacted to
+					about this project.
 					TEXT
 				}
 			}
@@ -70,8 +76,10 @@ module TestMin
 				# messages about test results
 				'test-success' => 'All tests run successfully',
 				'test-failure' => 'There were some errors in the tests',
+				'finished-testing' => 'finished testing',
 				
 				# submit messages
+				'email-prompt' => 'email address',
 				'submit-hold' => 'Submitting...',
 				'submit-success' => 'Test results successfully submitted.',
 				'submit-failure' => 'Submission of test results failed. Errors: [[errors]]',
@@ -605,8 +613,8 @@ module TestMin
 		results = TestMin.process_tests(log)
 		
 		# verbosify
-		puts
-		TestMin.hr 'title'=>'[finished testing]', 'dash'=>'='
+		puts()
+		TestMin.hr 'dash'=>'=', 'title'=>TestMin.message('finished-testing')
 		
 		# output succsss|failure
 		if results
@@ -614,6 +622,10 @@ module TestMin
 		else
 			puts TestMin.message('test-failure')
 		end
+		
+		# bottom of section
+		TestMin.hr 'dash'=>'='
+		puts
 		
 		# send log to TestMin service if necessary
 		puts
@@ -700,15 +712,103 @@ module TestMin
 		# get prompt
 		prompt = TestMin.message(
 			'submit-request',
-			'fields'=>TestMin.settings['submit-site'],
-			'root' => TestMin.settings['submit-site']['messages'],
-		) + "\n"
+			'fields' => TestMin.settings['submit'],
+			'root' => TestMin.settings['submit']['messages'],
+		)
 		
 		# get results of user prompt
 		return TestMin.yes_no(prompt)
 	end
 	#
 	# submit_ask
+	#---------------------------------------------------------------------------
+	
+	
+	#---------------------------------------------------------------------------
+	# email_ask
+	#
+	def TestMin.email_ask(results)
+		# TestMin.hr(__method__.to_s)
+		
+		# get prompt
+		prompt = TestMin.message(
+			'email-request',
+			'fields' => TestMin.settings['submit'],
+			'root' => TestMin.settings['submit']['messages'],
+		)
+		
+		# add a little horizontal space
+		puts
+		
+		# if the user wants to add email
+		if not TestMin.yes_no(prompt)
+			return true
+		end
+		
+		# build prompt for getting email
+		prompt = TestMin.message('email-prompt')
+		
+		# get email
+		email = TestMin.get_line(prompt)
+		
+		# ensure results has private element
+		if not results['private'].is_a?(Hash)
+			results['private'] = {}
+		end
+		
+		# add to private
+		results['private']['email'] = email
+		
+		# done
+		return true
+	end
+	#
+	# email_ask
+	#---------------------------------------------------------------------------
+	
+	
+	#---------------------------------------------------------------------------
+	# get_line
+	#
+	def TestMin.get_line(prompt)
+		# TestMin.hr(__method__.to_s)
+		
+		# loop until we get a line with some content
+		loop do
+			# get response
+			print prompt + ': '
+			response = $stdin.gets.chomp
+			
+			# if line has content, collapse and return it
+			if response.match(/\S/)
+				response = collapse(response)
+				return response
+			end
+		end
+	end
+	#
+	# get_line
+	#---------------------------------------------------------------------------
+	
+	
+	#---------------------------------------------------------------------------
+	# collapse
+	#
+	def self.collapse(str)
+		# TestMin.hr(__method__.to_s)
+		
+		# only process defined strings
+		if str.is_a?(String) and (not str.nil?())
+			str = str.gsub(/^[ \t\r\n]+/, '')
+			str = str.gsub(/[ \t\r\n]+$/, '')
+			str = str.gsub(/[ \t\r\n]+/, ' ')
+		end
+		
+		# return
+		return str
+	end
+	#
+	# collapse
 	#---------------------------------------------------------------------------
 	
 	
@@ -724,7 +824,7 @@ module TestMin
 		settings = TestMin.settings
 		
 		# if not set to submit, nothing to do
-		if not settings['submit']
+		if not settings['submit']['request']
 			return true
 		end
 		
@@ -733,12 +833,15 @@ module TestMin
 			return true
 		end
 		
+		# get email address
+		TestMin.email_ask(results)
+		
 		# load some modules
 		require "net/http"
 		require "uri"
 		
 		# get site settings
-		site = settings['submit-site']
+		site = settings['submit']
 		
 		# verbosify
 		puts TestMin.message('submit-hold')
