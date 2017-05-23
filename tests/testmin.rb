@@ -781,7 +781,7 @@ module TestMin
 			
 			# if line has content, collapse and return it
 			if response.match(/\S/)
-				response = collapse(response)
+				response = TestMin.collapse(response)
 				return response
 			end
 		end
@@ -794,7 +794,7 @@ module TestMin
 	#---------------------------------------------------------------------------
 	# collapse
 	#
-	def self.collapse(str)
+	def TestMin.collapse(str)
 		# TestMin.hr(__method__.to_s)
 		
 		# only process defined strings
