@@ -228,15 +228,20 @@ module TestMin
 				in_settings[file_path] = true
 			end
 			
-			# get list of rb files in directory, except for dev files
-			Dir.glob('./*.rb').each do |file_path|
-				# remove leading ./
-				file_path = file_path.sub(/\A\.\//, '')
-				
+			# get list of executable in directory
+			Dir.glob('*').each do |file_path|
 				# skip dev files
-				if not file_path.match(/\Adev\./)
-					in_dir[file_path] = true
+				if file_path.match(/\Adev\./)
+					next
 				end
+				
+				# must be executable
+				if not File.executable?(file_path)
+					next
+				end
+				
+				# add to list of files in directory
+				in_dir[file_path] = true
 				
 				# remove from settings
 				in_settings.delete(file_path)
@@ -256,8 +261,7 @@ module TestMin
 				return false
 			end
 			
-			# loop through files setting, removing
-			# existing files from in_dir
+			# loop through files setting, removing existing files from in_dir
 			dir['settings']['files'].each do |file_path|
 				in_dir.delete(file_path)
 			end
@@ -265,7 +269,7 @@ module TestMin
 			# add remaining files to files list
 			in_dir.keys.each do |file|
 				puts '*** not in ' + DIR_SETTINGS_FILE + ': ' + dir['path'] + '/' + file
-				dir['files'].push(file)
+				dir['settings']['files'].push(file)
 			end
 		end
 		
