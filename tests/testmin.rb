@@ -3,6 +3,7 @@ require 'json'
 require 'fileutils'
 require 'open3'
 require 'getoptlong'
+require 'benchmark'
 
 
 # TestMin is a simple, minimalist testing framework. It evolved out of the need
@@ -290,6 +291,9 @@ module TestMin
 		dir_path_display = dir_path_display.sub(/\A\.\//, '')
 		TestMin.hr('title'=>dir_path_display, 'dash'=>'=')
 		
+		# initialize success to true
+		success = true
+		
 		# add directory to log
 		dir_files = {}
 		dir_log = {'dir_order'=>dir_order, 'files'=>dir_files}
@@ -306,26 +310,32 @@ module TestMin
 			# initialize file_order
 			file_order = 0
 			
-			# loop through files
-			dir['settings']['files'].each do |file_path|
-				# increment file order
-				file_order = file_order + 1
-				
-				# run file
-				success = TestMin.file_run(dir_files, file_path, file_order)
-				
-				# if failure, we're done
-				if not success
-					return false
+			# run test files in directory
+			mark = Benchmark.measure {
+				# loop through files
+				dir['settings']['files'].each do |file_path|
+					# increment file order
+					file_order = file_order + 1
+					
+					# run file
+					success = TestMin.file_run(dir_files, file_path, file_order)
+					
+					# if failure, we're done
+					if not success
+						break
+					end
 				end
-			end
+			}
+			
+			# note run-time
+			dir_log['run-time'] = mark.real
 		end
 		
 		# add a little room underneath dir
 		puts
 		
-		# return true
-		return true
+		# return success
+		return success
 	end
 	#
 	# dir_run
@@ -350,13 +360,18 @@ module TestMin
 		debug_stderr = ''
 		
 		# run file
-		Open3.popen3('./' + file_path) do |stdin, stdout, stderr, thread|
-			debug_stdout = stdout.read.chomp
-			debug_stderr = stderr.read.chomp
-		end
+		mark = Benchmark.measure {
+			Open3.popen3('./' + file_path) do |stdin, stdout, stderr, thread|
+				debug_stdout = stdout.read.chomp
+				debug_stderr = stderr.read.chomp
+			end
+		}
 		
 		# get results
 		results = TestMin.parse_results(debug_stdout)
+		
+		# add run time
+		file_log['run-time'] = mark.real
 		
 		# determine success
 		if results.is_a?(Hash)
@@ -1039,19 +1054,30 @@ module TestMin
 		# initialize dir_order
 		dir_order = 0
 		
+		# initialize success to true
+		success = true
+		
 		# loop through directories
-		run_dirs.each do |dir|
-			# incremement dir_order
-			dir_order = dir_order + 1
-			
-			# run directory
-			if not TestMin.dir_run(log, dir, dir_order)
-				return false
+		mark = Benchmark.measure {
+			run_dirs.each do |dir|
+				# incremement dir_order
+				dir_order = dir_order + 1
+				
+				# run directory
+				success = TestMin.dir_run(log, dir, dir_order)
+				
+				# if not success, we're done looping
+				if not success
+					break
+				end
 			end
-		end
+		}
+		
+		# note run time
+		log['run-time'] = mark.real
 		
 		# success
-		return true
+		return success
 	end
 	#
 	# process_tests
