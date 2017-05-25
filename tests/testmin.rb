@@ -4,6 +4,7 @@ require 'fileutils'
 require 'open3'
 require 'getoptlong'
 require 'benchmark'
+require 'timeout'
 
 
 # TestMin is a simple, minimalist testing framework. It evolved out of the need
@@ -42,6 +43,11 @@ module TestMin
 	# DefaultSettings
 	#
 	DefaultSettings = {
+		# timeout
+		# set to 0 for no timeout
+		'timeout' => 10,
+		
+		# should the user be prompted to submit the test results
 		'submit' => {
 			'request' => false,
 			'request-email' => false,
@@ -344,6 +350,8 @@ module TestMin
 	
 	#---------------------------------------------------------------------------
 	# file_run
+	# TODO: The code in this routine gets a litle speghettish. Need to clean it
+	# up.
 	#
 	def TestMin.file_run(dir_files, file_path, file_order)
 		# TestMin.hr(__method__.to_s)
@@ -358,33 +366,53 @@ module TestMin
 		# debug objects
 		debug_stdout = ''
 		debug_stderr = ''
+		completed = true
 		
-		# run file
+		# run file with benchmark
 		mark = Benchmark.measure {
+			# run file with timeout
 			Open3.popen3('./' + file_path) do |stdin, stdout, stderr, thread|
-				debug_stdout = stdout.read.chomp
-				debug_stderr = stderr.read.chomp
+				begin
+					Timeout::timeout(TestMin.settings['timeout']) {
+						debug_stdout = stdout.read.chomp
+						debug_stderr = stderr.read.chomp
+					}
+				rescue
+					Process.kill('KILL', thread.pid)
+					file_log['timed-out'] = TestMin.settings['timeout']
+					completed = false
+				rescue
+					completed = false
+				end
 			end
 		}
 		
-		# get results
-		results = TestMin.parse_results(debug_stdout)
-		
-		# add run time
-		file_log['run-time'] = mark.real
-		
-		# determine success
-		if results.is_a?(Hash)
-			# get success
-			success = results.delete('testmin-success')
+		# if completed
+		if completed
+			# get results
+			results = TestMin.parse_results(debug_stdout)
 			
-			# add other elements to details if any
-			if results.any?
-				file_log['details'] = results
+			# determine success
+			if results.is_a?(Hash)
+				# get success
+				success = results.delete('testmin-success')
+				
+				# add other elements to details if any
+				if results.any?
+					file_log['details'] = results
+				end
+			else
+				success = false
 			end
+		
+		# else not completed
 		else
 			success = false
 		end
+		
+		# add success and run time
+		file_log['success'] = success
+		file_log['run-time'] = mark.real
 		
 		# if failure
 		if not success
