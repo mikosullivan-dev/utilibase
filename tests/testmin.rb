@@ -4,6 +4,7 @@ require 'fileutils'
 require 'open3'
 require 'getoptlong'
 
+
 # TestMin is a simple, minimalist testing framework. It evolved out of the need
 # for such a framework for Utilibase. TestMin will eventually be spun off into
 # its own project.
@@ -18,7 +19,7 @@ ENV['clear_done'] = '1'
 module TestMin
 	
 	# TestMin version
-	VERSION = '0.0.1'
+	VERSION = '0.0.2'
 	
 	# length for horizontal rules
 	HR_LENGTH = 100
@@ -42,28 +43,10 @@ module TestMin
 	DefaultSettings = {
 		'submit' => {
 			'request' => false,
+			'request-email' => false,
+			'request-comments' => false,
 			'url' => 'https://testmin.idocs.com/submit',
 			'title' => 'Idocs Testmin',
-			'messages' => {
-				'en' => {
-					# request to submit results
-					'submit-request' => <<~TEXT,
-					May this script submit these test results to [[title]]?
-					The results will be submitted to the Idocs TestMin service
-					where they will be publicly available. In addition to the
-					test results, the only information about your system will be
-					the operating system and version, the version of Ruby, and
-					the version of TestMin.
-					TEXT
-					
-					# request to add email address
-					'email-request' => <<~TEXT,
-					Would you like to send your email address? Your email will
-					not be displayed publicly. You will only be contacted to
-					about this project.
-					TEXT
-				}
-			}
 		},
 		
 		# messages
@@ -83,6 +66,30 @@ module TestMin
 				'submit-hold' => 'Submitting...',
 				'submit-success' => 'Test results successfully submitted.',
 				'submit-failure' => 'Submission of test results failed. Errors: [[errors]]',
+				'add-comments' => 'Add your comments here.',
+				
+				# request to submit results
+				'submit-request' => <<~TEXT,
+				May this script submit these test results to [[title]]?
+				The results will be submitted to the [[title]] service
+				where they will be publicly available. In addition to the
+				test results, the only information about your system will be
+				the operating system and version, the version of Ruby, and
+				the version of TestMin.
+				TEXT
+				
+				# request to add email address
+				'email-request' => <<~TEXT,
+				Would you like to send your email address? Your email will
+				not be publicly displayed. You will only be contacted to
+				about this project.
+				TEXT
+				
+				# request to add email address
+				'comments-request' => <<~TEXT,
+				Would you like to add some comments? Your comments will not
+				be publicly displayed.
+				TEXT
 				
 				# prompts
 				'yn' => '[Yes|No]',
@@ -528,6 +535,7 @@ module TestMin
 		log['success'] = true
 		log['messages'] = []
 		log['dirs'] = {}
+		log['private'] = {}
 		
 		# get project id if there is one
 		if not TestMin.settings['project-id'].nil?
@@ -713,7 +721,6 @@ module TestMin
 		prompt = TestMin.message(
 			'submit-request',
 			'fields' => TestMin.settings['submit'],
-			'root' => TestMin.settings['submit']['messages'],
 		)
 		
 		# get results of user prompt
@@ -730,11 +737,15 @@ module TestMin
 	def TestMin.email_ask(results)
 		# TestMin.hr(__method__.to_s)
 		
+		# if not set to submit email, nothing to do
+		if not settings['submit']['request-email']
+			return true
+		end
+		
 		# get prompt
 		prompt = TestMin.message(
 			'email-request',
 			'fields' => TestMin.settings['submit'],
-			'root' => TestMin.settings['submit']['messages'],
 		)
 		
 		# add a little horizontal space
@@ -751,11 +762,6 @@ module TestMin
 		# get email
 		email = TestMin.get_line(prompt)
 		
-		# ensure results has private element
-		if not results['private'].is_a?(Hash)
-			results['private'] = {}
-		end
-		
 		# add to private
 		results['private']['email'] = email
 		
@@ -764,6 +770,66 @@ module TestMin
 	end
 	#
 	# email_ask
+	#---------------------------------------------------------------------------
+	
+	
+	#---------------------------------------------------------------------------
+	# comments_ask
+	#
+	def TestMin.comments_ask(results)
+		# TestMin.hr(__method__.to_s)
+		
+		# early exit: no editor
+		if not ENV['EDITOR'].match(/\S/)
+			return
+		end
+		
+		# if not set to submit comments, nothing to do
+		if not settings['submit']['request-comments']
+			return true
+		end
+		
+		# get prompt
+		prompt = TestMin.message(
+			'comments-request',
+			'fields' => TestMin.settings['submit'],
+		)
+		
+		# add a little horizontal space
+		puts
+		
+		# if the user wants to add email
+		if not TestMin.yes_no(prompt)
+			return true
+		end
+		
+		# build prompt for getting email
+		prompt = TestMin.message('add-comments')
+		
+		# create comments file
+		path = '/tmp/testmin-comments-' + TestMin.randstr + '.txt'
+		
+		# create file
+		File.open(path, 'w') { |file|
+			file.write(prompt + "\n");
+		}
+		
+		# open editor
+		system(ENV['EDITOR'], path)
+		
+		# read in file
+		results['private']['comments'] = File.read(path)
+		
+		# delete file
+		if File.exist?(path)
+			File.delete(path)
+		end
+		
+		# done
+		return true
+	end
+	#
+	# comments_ask
 	#---------------------------------------------------------------------------
 	
 	
@@ -828,13 +894,16 @@ module TestMin
 			return true
 		end
 		
-		# check if the user wants to submit
+		# check if the user wants to submit the test results
 		if not TestMin.submit_ask()
 			return true
 		end
 		
 		# get email address
 		TestMin.email_ask(results)
+		
+		# get comments
+		TestMin.comments_ask(results)
 		
 		# load some modules
 		require "net/http"
