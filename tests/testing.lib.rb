@@ -2,7 +2,7 @@
 require_relative './testmin.rb'
 
 # load configuration
-require_relative './configuration.rb'
+require_relative './testing.config.rb'
 
 # load Utilibase
 require_relative $ut_testing['utilibase_path']
