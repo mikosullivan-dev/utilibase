@@ -10,6 +10,10 @@ require 'timeout'
 # TestMin is a simple, minimalist testing framework. It evolved out of the need
 # for such a framework for Utilibase. TestMin will eventually be spun off into
 # its own project.
+#
+# To run the tests for Utilibase, simply go into the directory where this file
+# is located and run ./testmin.rb. All the tests should run, then you will be
+# prompted to submit the results of your test run.
 
 # note clear as done
 ENV['clear_done'] = '1'
