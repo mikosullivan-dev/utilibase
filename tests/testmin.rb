@@ -827,7 +827,7 @@ module TestMin
 		# TestMin.hr(__method__.to_s)
 		
 		# early exit: no editor
-		if not ENV['EDITOR'].match(/\S/)
+		if ENV['EDITOR'].nil?
 			return
 		end
 		
