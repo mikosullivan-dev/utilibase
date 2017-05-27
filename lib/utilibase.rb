@@ -124,6 +124,9 @@ class Utilibase
 	# Utilibase.initialize_db
 	## Static method. Initializes the database with the necessary tables,
 	## indexes etc.
+	##
+	## This method includes the entire SQL to initialize the SQLite database as
+	## a Utilibase database.
 	#
 	def Utilibase.initialize_db(dbh)
 		# TestMin.hr(__method__.to_s)
@@ -131,6 +134,7 @@ class Utilibase
 		# sql
 		sql_create = <<~SQL
 		-- current
+		-- This table holds the current records.
 		create table current (
 			-- record_uuid
 			record_uuid
@@ -140,22 +144,28 @@ class Utilibase
 			check( record_uuid like '________-____-____-____-____________' ),
 			
 			-- jhash
+			-- jhash holds the canonical information about the record. All other
+			-- fields derive from this field.
 			jhash
 			text
 			not null
 			check( (jhash like '{%') and (jhash like '%}') ),
 			
 			-- links
+			-- A list of the links in jhash
 			links
 			text
 			not null,
 			
 			-- update_stat
+			-- This field is used in the trace and purge process.
 			update_stat
 			text
 			check( (update_stat is null) or (update_stat = 'n') or (update_stat = 'u') ),
 			
 			-- dependency
+			-- Indicates if this is a dependent, independent, or multilink
+			-- field.
 			dependency
 			text
 			default 'd'
@@ -165,17 +175,20 @@ class Utilibase
 			-- unlinked
 			-- i: the record has been marked as unlinked, but has not had its ancestors traced
 			-- r: the record has had its ancestors traced
-			-- TODO: "i" doesn't reallymake sense to mark as unlinked, change to "u"
+			-- TODO: "i" doesn't really make sense to mark as unlinked, change
+			-- to "u"
 			unlinked
 			text
 			check( unlinked in ('i', 'r') ),
 			
 			-- ts_start
+			-- Beginning time range for when this record is active.
 			ts_start
 			text
 			check( ts_start like '____-__-__T__:__:__+__.___Z' ),
 			
 			-- ts_end
+			-- Ending time range for when this record is active.
 			-- KLUDGE: To make it easier to union ts_end with the history
 			-- table, the current table has the field ts_end which is always
 			-- null. It seems silly to have a field that's always null, but
@@ -219,6 +232,7 @@ class Utilibase
 		create index current_unlinked on current (unlinked);
 		
 		-- history
+		-- This table holds the historical records.
 		create table history (
 			-- version_uuid
 			version_uuid
@@ -277,6 +291,8 @@ class Utilibase
 		create index history_ts_end on history (ts_end);
 		
 		-- current links
+		-- Table of links in the "current" table. This denormalized data is used
+		-- as part of the trace and purge process.
 		create table links_current (
 			-- src_uuid
 			src_uuid
@@ -298,18 +314,14 @@ class Utilibase
 			not null
 			check( src_is_independent in (0, 1) ),
 			
-			-- checked
-			-- checked
-			-- boolean
-			-- not null
-			-- check( checked in (0, 1) )
-			-- default 0,
-			
 			-- set primary key
 			primary key(src_uuid, tgt_uuid)
 		);
 		
 		-- traces
+		-- This table is used as part of the trace process. A new record in this
+		-- table is create for each time a record is traced. After the trace,
+		-- the record is deleted.
 		create table traces (
 			-- trace_uuid
 			trace_uuid
