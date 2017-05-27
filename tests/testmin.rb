@@ -28,6 +28,7 @@ module TestMin
 	GLOBAL_CONFIG_FILE = './testmin.config.json'
 	
 	# human languages (e.g. english, spanish)
+	# For now we only have English.
 	@human_languages = ['en']
 	
 	# if devshortcut() has been called
@@ -40,6 +41,10 @@ module TestMin
 	# DefaultSettings
 	#
 	DefaultSettings = {
+		# timeout: set to 0 for no timeout
+		'timeout' => 30,
+		
+		# should the user be prompted to submit the test results
 		'submit' => {
 			'request' => false,
 			'url' => 'https://testmin.idocs.com/submit',
@@ -71,6 +76,7 @@ module TestMin
 			# English
 			'en' => {
 				# general purpose messages
+				'success' => 'success',
 				'failure' => 'failure',
 				
 				# messages about test results
@@ -89,8 +95,8 @@ module TestMin
 			},
 			
 			# Spanish
-			# Did one message in Spanish just to test the system. Somebody please
-			# feel free to add Spanish translations.
+			# Did one message in Spanish just to test the system. Somebody
+			# please feel free to add Spanish translations.
 			'es' => {
 				'submit-results' => '¿Envíe estos resultados de la prueba a [[title]]?'
 			},
