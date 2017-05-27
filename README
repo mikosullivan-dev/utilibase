@@ -9,6 +9,7 @@ testmin.rb. Utilibase is not yet a working database system. Right now we need
 testers. Testing is very simple. See the "Testing" section below for
 instructions on how to test Utilibase.
 
+
 Prerequisites
 
 Utilibase is designed for Unix derivative systems such as Linux and BSD. To run
@@ -17,6 +18,7 @@ on those systems you'll need the following software installed:
 - Ruby
 - SQLite3
 - the Ruby gem for SQLite3
+
 
 Testing
 
