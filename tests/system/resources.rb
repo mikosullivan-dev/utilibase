@@ -1,7 +1,7 @@
 #!/usr/bin/ruby -w
 system 'clear' unless ENV['clear_done']
 require_relative '../testmin.rb'
-require_relative '../testing.config.rb'
+require_relative '../configuration.rb'
 require 'fileutils'
 
 # load built-in ruby modules
@@ -10,15 +10,14 @@ require 'sqlite3'
 # enable taint mode
 $SAFE = 1
 
-# purpose: test that the system has the resources that are necessary to run
-# Utilibase
+# purpose: test that the system has the resources that are necessary to run Utilibase
 #	sqlite3
 #		installed
 #		minimum version
 #	sqlite3 gem
 #		minimum version
 
-# NOTE: This script does not load utilibase.rb or testing.lib.rb.
+# NOTE: This script does not load utilibase.rb or testing-lib.rb.
 
 # initialize details hash, which will be saved to log
 details = {}
@@ -111,9 +110,6 @@ end
 # check sqlite and sqlite3 gem minimum versions
 #-------------------------------------------------------------------------------
 
-
-# TESTING
-# sleep 100000
 
 # done
 # puts '[done]'
