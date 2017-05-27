@@ -2,7 +2,7 @@ Utilibase version 0.0.2
 May 27, 2017
 
 Utilibase is an ACID compliant NoSQL database system.
-See the wiki for more details: https://github.com/mikosullivan/utilibase/wiki/Utilibase
+See the wiki for more details: https://github.com/mikosullivan/utilibase/wiki
 
 This is a very early release of Utilibase. This release tests the methods in
 testmin.rb. Utilibase is not yet a working database system. Right now we need
