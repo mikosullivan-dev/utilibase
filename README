@@ -1,8 +1,5 @@
 Utilibase version 0.0.1
-May 26, 2017
-
-Utilibase is an ACID compliant NoSQL database system. It is written in Ruby and
-uses SQLite3.
+May 19, 2017
 
 This is a very early release of Utilibase. This release is more about testing
 the testmin.rb script than testing Utilibase itself.
@@ -20,20 +17,3 @@ Testing
 
 To run the tests, change into the "tests" directory. Run ./testmin.rb. The tests
 should run and you should be prompted about submitting the results.
-
-How you can help
-
-The help that is needed right now is testing. Run these tests on as many
-different types of systems as you can, then submit the results.
-
-One of the issues we need to nail down is what are the best minimum versions of
-Ruby, SQLite3 and the SQLite3 gem. Your input on that issue would be
-appreciated.
-
-Contact
-
-Please feel free to contact me about Utilibase. I'm very excited about this
-project and want to spread the word.
-
-Miko O'Sullivan
-miko@idocs.com
