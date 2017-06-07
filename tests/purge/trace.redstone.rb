@@ -33,4 +33,4 @@ UtilibaseTesting.bool 'should not be in current anymore', xyz.uuid('redstone'), 
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

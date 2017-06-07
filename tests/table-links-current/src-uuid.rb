@@ -23,7 +23,7 @@ table_name = 'links_current'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -44,7 +44,7 @@ end
 # references record in current
 #
 if true
-	TestMin.hr('references record in current')
+	Testmin.hr('references record in current')
 	
 	UtilibaseTesting.check_foreign_key(
 		dbh,
@@ -62,4 +62,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

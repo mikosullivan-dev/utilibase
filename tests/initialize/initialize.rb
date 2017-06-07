@@ -32,4 +32,4 @@ UtilibaseTesting.isa 'current', rows['current'], Hash
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

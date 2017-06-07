@@ -28,7 +28,7 @@ table_name = 'current'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -49,7 +49,7 @@ end
 # index: current_update_stat
 #
 if true
-	TestMin.hr('current_update_stat')
+	Testmin.hr('current_update_stat')
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -70,7 +70,7 @@ end
 # index: current_record_uuid_update_stat
 #
 if true
-	TestMin.hr('current_record_uuid_update_stat')
+	Testmin.hr('current_record_uuid_update_stat')
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -91,7 +91,7 @@ end
 # must be nil, n, or u
 #
 if true
-	TestMin.hr 'must be nil, n, or u'
+	Testmin.hr 'must be nil, n, or u'
 	
 	# check
 	begin
@@ -109,4 +109,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

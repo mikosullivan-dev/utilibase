@@ -24,7 +24,7 @@ table_name = 'current'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -45,7 +45,7 @@ end
 # index: current_dependency
 #
 if true
-	TestMin.hr 'index: current_dependency'
+	Testmin.hr 'index: current_dependency'
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -66,7 +66,7 @@ end
 # defaults to d
 #
 if true
-	TestMin.hr 'defaults to d'
+	Testmin.hr 'defaults to d'
 	
 	# generate uuid
 	record_uuid = SecureRandom.uuid()
@@ -90,7 +90,7 @@ end
 # must be only i, d, or m
 #
 if true
-	TestMin.hr 'must be only i, d, or m'
+	Testmin.hr 'must be only i, d, or m'
 	
 	# check
 	begin
@@ -112,7 +112,7 @@ end
 # if dependency is 'm' then links must be ''
 #
 if true
-	TestMin.hr "if dependency is 'm' then links must be ''"
+	Testmin.hr "if dependency is 'm' then links must be ''"
 	
 	# check
 	begin
@@ -142,4 +142,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

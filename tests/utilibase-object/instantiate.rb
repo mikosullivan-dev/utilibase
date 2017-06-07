@@ -29,4 +29,4 @@ UtilibaseTesting.isa('is a', rcrd, Utilibase::Record)
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

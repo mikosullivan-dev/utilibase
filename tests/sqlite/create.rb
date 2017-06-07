@@ -19,7 +19,7 @@ $SAFE = 1
 # directory name cannot be tainted
 #
 if true
-	TestMin.hr 'directory name cannot be tainted'
+	Testmin.hr 'directory name cannot be tainted'
 	
 	# create and taint directory name
 	db_dir = Utilibase::Utils.randword()
@@ -48,7 +48,7 @@ end
 # file name cannot be tainted
 #
 if true
-	TestMin.hr 'file name cannot be tainted'
+	Testmin.hr 'file name cannot be tainted'
 	
 	# create file name and path
 	db_file = Utilibase::Utils.randword()
@@ -76,7 +76,7 @@ if true
 	end
 	
 	# TESTING
-	# TestMin.devexit
+	# Testmin.devexit
 end
 #
 # file name may not be tainted
@@ -87,7 +87,7 @@ end
 # directory must exist
 #
 if true
-	TestMin.hr 'directory must exist'
+	Testmin.hr 'directory must exist'
 	
 	# create directory path
 	db_dir = Utilibase::Utils.randword()
@@ -115,7 +115,7 @@ end
 # file must not already exist
 #
 if true
-	TestMin.hr 'file must not already exist'
+	Testmin.hr 'file must not already exist'
 	
 	# create file name and path
 	db_file = Utilibase::Utils.randword()
@@ -147,7 +147,7 @@ end
 # successful database file creation
 #
 if true
-	TestMin.hr 'successful database file creation'
+	Testmin.hr 'successful database file creation'
 	
 	# create file name and path
 	db_file = Utilibase::Utils.randword()
@@ -172,4 +172,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

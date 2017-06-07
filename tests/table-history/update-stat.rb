@@ -29,7 +29,7 @@ table_name = 'history'
 # structure
 #
 if true
-	TestMin.hr('structure')
+	Testmin.hr('structure')
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -50,7 +50,7 @@ end
 # index: history_update_stat
 #
 if true
-	TestMin.hr('history_update_stat')
+	Testmin.hr('history_update_stat')
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -189,4 +189,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

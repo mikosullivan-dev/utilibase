@@ -57,4 +57,4 @@ shoulds.each { |id|
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

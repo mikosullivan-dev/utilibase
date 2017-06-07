@@ -70,7 +70,7 @@ end
 # org
 #
 if true
-	TestMin.hr 'org'
+	Testmin.hr 'org'
 	el = by_name['org']
 	
 	# tests
@@ -96,7 +96,7 @@ end
 # fruit
 #
 if true
-	TestMin.hr 'fruit'
+	Testmin.hr 'fruit'
 	el = by_name['fruit']
 	
 	# check uuids
@@ -124,7 +124,7 @@ end
 # apple
 #
 if true
-	TestMin.hr 'apple'
+	Testmin.hr 'apple'
 	el = by_name['apple']
 	
 	# build hash for should
@@ -148,7 +148,7 @@ end
 # grape
 #
 if true
-	TestMin.hr 'grape'
+	Testmin.hr 'grape'
 	el = by_name['grape']
 	
 	# build hash for should
@@ -172,4 +172,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

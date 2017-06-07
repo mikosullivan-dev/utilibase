@@ -104,7 +104,7 @@ class Utilibase
 	# statement handle.
 	#
 	def dbh()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initialize @dbh if we haven't already
 		if @dbh.nil?
@@ -129,7 +129,7 @@ class Utilibase
 	## a Utilibase database.
 	#
 	def Utilibase.initialize_db(dbh)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# sql
 		sql_create = <<~SQL
@@ -410,7 +410,7 @@ class Utilibase
 	# then the record and all ancestor records are deleted.
 	#
 	def trace_record(record_uuid)
-		# TestMin.hr(__method__.to_s + ': ' + record_uuid)
+		# Testmin.hr(__method__.to_s + ': ' + record_uuid)
 		
 		# get database handle
 		dbh = self.dbh
@@ -479,7 +479,7 @@ class Utilibase
 	# Returns a new utilibase record object.
 	#
 	def record(record_uuid)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		return Utilibase::Record.new(self, record_uuid)
 	end
 	#
@@ -496,7 +496,7 @@ class Utilibase
 	## record object.
 	#
 	def row(record_uuid)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# get record
 		sql = 'select * from current where record_uuid=:record_uuid'
@@ -523,7 +523,7 @@ class Utilibase
 	## records <em>those<em> linked to, etc.
 	#
 	def set_unlinked()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# convenience
 		dbh = self.dbh
@@ -578,7 +578,7 @@ class Utilibase
 	## Set as unlinked records that were unlinked from updated sources.
 	#
 	def set_unlinked_updated()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# convenience
 		dbh = self.dbh
@@ -620,7 +620,7 @@ class Utilibase
 	## transaction.
 	#
 	def purge()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# convenience
 		dbh = self.dbh
@@ -661,7 +661,7 @@ class Utilibase
 	## a record into traces.
 	#
 	def insert_trace_record_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('insert_trace_record')
@@ -683,7 +683,7 @@ class Utilibase
 	## records as unlinked.
 	#
 	def set_unlinked_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('set_unlinked')
@@ -714,7 +714,7 @@ class Utilibase
 	## records from links_current as part of the trace process.
 	#
 	def delete_from_links_current_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('delete_from_links_current')
@@ -743,7 +743,7 @@ class Utilibase
 	## records from links_current as part of the trace process.
 	#
 	def update_current_unlinked_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('update_current_unlinked')
@@ -773,7 +773,7 @@ class Utilibase
 	## records as having been recursed as part of the trace process.
 	#
 	def set_as_recursed_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('set_as_recursed')
@@ -802,7 +802,7 @@ class Utilibase
 	## the first record of a trace into trace_records.
 	#
 	def initial_trace_record_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('initial_trace_record')
@@ -829,7 +829,7 @@ class Utilibase
 	# insert_trace_records_sth
 	#
 	def insert_trace_records_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('insert_trace_records')
@@ -880,7 +880,7 @@ class Utilibase
 	# independent_found_sth
 	#
 	def independent_found_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('independent_found')
@@ -907,7 +907,7 @@ class Utilibase
 	# update_traced_sth
 	#
 	def update_traced_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('update_traced')
@@ -934,7 +934,7 @@ class Utilibase
 	# delete_untraced_sth
 	#
 	def delete_untraced_sth()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# create sth if necessary
 		if not @sths.key?('delete_untraced')
@@ -999,7 +999,7 @@ class Utilibase::DBH < SQLite3::Database
 	# Do not accept tainted sql.
 	# Call super method.
 	def execute(sql, bind_vars=[])
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# refuse to run tainted sql
 		if sql.tainted?
@@ -1051,7 +1051,7 @@ class Utilibase::DBH < SQLite3::Database
 	
 	# select_hash
 	def select_hash(sql, key_name, bind_vars=[])
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# hold on to current setting for results_as_hash
 		results_as_hash_hold = self.results_as_hash
@@ -1078,7 +1078,7 @@ class Utilibase::DBH < SQLite3::Database
 	# select_column
 	# returns an array of all the values in the given column
 	def select_column(sql, bind_vars=[])
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initilize return value
 		rv = []
@@ -1095,7 +1095,7 @@ class Utilibase::DBH < SQLite3::Database
 	# select_field
 	# returns a scalar of all the value in the first row in given column
 	def select_field(sql, bind_vars=[])
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initilize return value
 		rv = self.select_column(sql, bind_vars)
@@ -1175,7 +1175,7 @@ module Utilibase::Utils
 	
 	# unravel
 	def self.unravel(org)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initialize carry
 		uuids = {}
@@ -1201,7 +1201,7 @@ module Utilibase::Utils
 	
 	# unravel_hash
 	def self.unravel_hash(org, uuids, objects)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# if we've already processed this object, don't do so again
 		if objects[org.object_id]
@@ -1247,7 +1247,7 @@ module Utilibase::Utils
 	
 	# unravel_array
 	def self.unravel_array(org, uuids, objects)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initialize return value
 		rv = []
@@ -1276,7 +1276,7 @@ module Utilibase::Utils
 	
 	# links array
 	def self.links_array(org)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# initialize uuids
 		uuids = {}
@@ -1305,7 +1305,7 @@ module Utilibase::Utils
 	
 	# collapse
 	def self.collapse(str)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# only process defined strings
 		if str.is_a?(String) and (not str.nil?())
@@ -1320,7 +1320,7 @@ module Utilibase::Utils
 	
 	# check_db_path
 	def self.check_db_path(db_path)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# path required
 		if db_path.nil?
@@ -1342,7 +1342,7 @@ module Utilibase::Utils
 	# TO-DO: For now, only merging top-level arrays. Need to carefully work
 	# through the logic of arrays nested in arrays.
 	def self.merge_arrays(org, input)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# clone
 		input = input.clone
@@ -1389,7 +1389,7 @@ module Utilibase::Utils
 	# NOTE: This function assumes that these hashes have identical values
 	# $id.
 	def self.merge_jhashes(jhash_old, jhash_new)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 
 		# clone old
 		jhash_merged = jhash_old.clone
@@ -1425,7 +1425,7 @@ module Utilibase::Utils
 	
 	# hash_command
 	def self.hash_command(rv, command)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# if command is not a hash, nothing to do
 		# TO-DO: Probably should throw an error if the command
@@ -1460,7 +1460,7 @@ module Utilibase::Utils
 	
 	# unlinks
 	def self.get_unlinks(jhash, old_links)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# ensure jhash is a hash
 		if not jhash.is_a?(Hash)
@@ -1494,7 +1494,7 @@ class Utilibase::Record
 
 	# initialize
 	def initialize(db, rcrd_uuid)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 
 		# check that db is a Utilibase object
 		if not db.is_a?(Utilibase)
@@ -1513,7 +1513,7 @@ class Utilibase::Record
 	
 	# in_db
 	def in_db()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# get record count
 		sql = 'select count(*) as rcount from current where record_uuid=:uuid'
@@ -1525,7 +1525,7 @@ class Utilibase::Record
 
 	# save
 	def save(struct={})
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 
 		# add or update
 		if self.in_db
@@ -1540,7 +1540,7 @@ class Utilibase::Record
 	# not yet in the database. This method saves a completely new record
 	# consisting of just the $id field.
 	def save_new(struct={})
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# clone structure because we're going to muck around with it
 		struct = struct.clone
@@ -1561,7 +1561,7 @@ class Utilibase::Record
 	# - is already in the database
 	# - the structure has been unraveled
 	def update(struct)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# clone structure because we're going to muck around with it
 		struct = struct.clone
@@ -1635,7 +1635,7 @@ class Utilibase::Record
 	
 	# get_jhash
 	def get_jhash()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# if already in db
 		if self.in_db()
@@ -1651,7 +1651,7 @@ class Utilibase::Record
 	
 	# get_fields
 	def get_field(field_names)
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# ensure field_names is an array
 		if not field_names.is_a?(Array)
@@ -1695,7 +1695,7 @@ class Utilibase::Record
 	
 	# delete
 	def delete()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# sql
 		sql = <<~SQL
@@ -1729,7 +1729,7 @@ class Utilibase::Record
 	
 	# row
 	def row()
-		# TestMin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		return self.db.row(self.uuid)
 	end
 end

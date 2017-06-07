@@ -168,4 +168,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

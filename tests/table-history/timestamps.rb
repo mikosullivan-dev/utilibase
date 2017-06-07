@@ -30,7 +30,7 @@ table_name = 'history'
 # structure: ts_start
 #
 if true
-	TestMin.hr 'structure: ts_start'
+	Testmin.hr 'structure: ts_start'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -51,7 +51,7 @@ end
 # index: history_ts_start
 #
 if true
-	TestMin.hr 'index: history_ts_start'
+	Testmin.hr 'index: history_ts_start'
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -72,7 +72,7 @@ end
 # structure: ts_end
 #
 if true
-	TestMin.hr 'structure: ts_end'
+	Testmin.hr 'structure: ts_end'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -93,7 +93,7 @@ end
 # index: history_ts_end
 #
 if true
-	TestMin.hr 'index: history_ts_end'
+	Testmin.hr 'index: history_ts_end'
 	# check
 	UtilibaseTesting.check_index(
 		dbh,                 # dbh
@@ -113,7 +113,7 @@ end
 # ts_start: format
 #
 if true
-	TestMin.hr 'ts_start: format'
+	Testmin.hr 'ts_start: format'
 	
 	# check
 	begin
@@ -152,7 +152,7 @@ end
 # ts_end: format
 #
 if true
-	TestMin.hr 'ts_end: format'
+	Testmin.hr 'ts_end: format'
 	
 	# check
 	begin
@@ -188,4 +188,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

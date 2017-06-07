@@ -6,4 +6,4 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # done
-TestMin.done()
+Testmin.done()

@@ -24,7 +24,7 @@ table_name = 'links_current'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -45,7 +45,7 @@ end
 # not null
 #
 if true
-	TestMin.hr 'not null'
+	Testmin.hr 'not null'
 	
 	# generate some uuids
 	valid_uuids = [SecureRandom.uuid(), SecureRandom.uuid()]
@@ -75,7 +75,7 @@ end
 # 0 or 1
 #
 if true
-	TestMin.hr '0 or 1'
+	Testmin.hr '0 or 1'
 	
 	# generate some uuids
 	valid_uuids = [SecureRandom.uuid(), SecureRandom.uuid()]
@@ -103,4 +103,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

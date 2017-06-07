@@ -34,7 +34,7 @@ field_name = 'record_uuid'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -55,7 +55,7 @@ end
 # index: history_record_uuid
 #
 if true
-	TestMin.hr 'index: history_record_uuid'
+	Testmin.hr 'index: history_record_uuid'
 	index_name = 'history_record_uuid'
 	column_count = 1
 
@@ -78,7 +78,7 @@ end
 # valid uuid
 #
 if true
-	TestMin.hr 'valid uuid'
+	Testmin.hr 'valid uuid'
 	
 	# check
 	begin
@@ -116,4 +116,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

@@ -37,4 +37,4 @@ UtilibaseTesting.bool 'should not be in current anymore', xyz.in_current('mary-h
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

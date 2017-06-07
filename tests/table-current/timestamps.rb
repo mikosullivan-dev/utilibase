@@ -28,7 +28,7 @@ table_name = 'current'
 # structure: ts_start
 #
 if true
-	TestMin.hr 'structure: ts_start'
+	Testmin.hr 'structure: ts_start'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -50,7 +50,7 @@ end
 # index: current_ts_start
 #
 if true
-	TestMin.hr 'index: current_ts_start'
+	Testmin.hr 'index: current_ts_start'
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -71,7 +71,7 @@ end
 # structure: ts_end
 #
 if true
-	TestMin.hr 'structure: ts_end'
+	Testmin.hr 'structure: ts_end'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -93,7 +93,7 @@ end
 # ts_start: format
 #
 if true
-	TestMin.hr 'ts_start: format'
+	Testmin.hr 'ts_start: format'
 	
 	# check
 	begin
@@ -115,7 +115,7 @@ end
 # ts_end: must be null
 #
 if true
-	TestMin.hr 'ts_end: must be null'
+	Testmin.hr 'ts_end: must be null'
 	
 	# check
 	begin
@@ -134,4 +134,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

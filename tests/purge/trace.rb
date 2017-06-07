@@ -28,7 +28,7 @@ dbh.execute(sql)
 # trace mary-home-phone-properties
 #
 if true
-	TestMin.hr('title'=>'trace mary-home-phone-properties', 'dash'=>'=')
+	Testmin.hr('title'=>'trace mary-home-phone-properties', 'dash'=>'=')
 	
 	# set some records as unlinked
 	sql = "update current set unlinked='r' where notes=:id"
@@ -68,7 +68,7 @@ end
 # trace nobodys-cell-phone-properties
 #
 if true
-	TestMin.hr('title'=>'trace nobodys-cell-phone-properties', 'dash'=>'=')
+	Testmin.hr('title'=>'trace nobodys-cell-phone-properties', 'dash'=>'=')
 	
 	# run trace
 	db.trace_record(xyz.uuid('nobodys-cell-phone-properties'))
@@ -92,4 +92,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

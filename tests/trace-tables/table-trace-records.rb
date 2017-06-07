@@ -29,7 +29,7 @@ table_name = 'trace_records'
 # structure: trace_uuid
 #
 if true
-	TestMin.hr 'structure: trace_uuid'
+	Testmin.hr 'structure: trace_uuid'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -51,7 +51,7 @@ end
 # structure: record_uuid
 #
 if true
-	TestMin.hr 'structure: record_uuid'
+	Testmin.hr 'structure: record_uuid'
 	
 	# field_structure(dbh, table_name, field_name, pk, type, notnull, default)
 	UtilibaseTesting.field_structure(
@@ -90,4 +90,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

@@ -32,7 +32,7 @@ table_name = 'traces'
 # structure: trace_uuid
 #
 if true
-	TestMin.hr 'structure: trace_uuid'
+	Testmin.hr 'structure: trace_uuid'
 	field_name = 'trace_uuid'
 	
 	UtilibaseTesting.field_structure(
@@ -53,7 +53,7 @@ end
 # trace_uuid: uuid format
 #
 if true
-	TestMin.hr 'trace_uuid: uuid format'
+	Testmin.hr 'trace_uuid: uuid format'
 	
 	# check
 	begin
@@ -89,7 +89,7 @@ end
 # init_time: trace_uuid
 #
 if true
-	TestMin.hr 'structure: init_time'
+	Testmin.hr 'structure: init_time'
 	
 	UtilibaseTesting.field_structure(
 		dbh,                  # dbh
@@ -109,7 +109,7 @@ end
 # init_time: default
 #
 if true
-	TestMin.hr 'init_time: default'
+	Testmin.hr 'init_time: default'
 	
 	# generate trace_uuid
 	trace_uuid = SecureRandom.uuid()
@@ -134,4 +134,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

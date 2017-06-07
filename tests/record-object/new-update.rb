@@ -112,7 +112,7 @@ sql = "update current set update_stat=null where record_uuid=:uuid"
 db.dbh.execute(sql, 'uuid'=>rcrd.uuid)
 
 # update record using record object
-TestMin.hr('update record using record object')
+Testmin.hr('update record using record object')
 struct = {'z'=>'z value'}
 rcrd.update(struct)
 
@@ -122,13 +122,13 @@ updated = dbh.get_first_row(sql, 'uuid'=>rcrd.uuid)
 UtilibaseTesting.comp('update', updated['update_stat'], 'u')
 
 # check jhash
-TestMin.hr('check jhash')
+Testmin.hr('check jhash')
 jhash = rcrd.get_jhash()
 UtilibaseTesting.comp('add to ending', jhash['y'][2], 'add to ending')
 UtilibaseTesting.comp('add to ending', jhash['z'], 'z value')
 
 # set record to not updated
-TestMin.hr('set record to not updated')
+Testmin.hr('set record to not updated')
 sql = 'update current set update_stat=null where record_uuid=:uuid'
 db.dbh.execute(sql, 'uuid'=>rcrd.uuid)
 
@@ -148,7 +148,7 @@ UtilibaseTesting.comp('update new record', jhash['z'], 'new z value')
 UtilibaseTesting.comp('update', updated['update_stat'], 'u')
 
 # history table should have old copy of record
-TestMin.hr('history table should have old copy of record')
+Testmin.hr('history table should have old copy of record')
 sql = 'select jhash from history where record_uuid=:uuid'
 historical = dbh.get_first_row(sql, 'uuid'=>rcrd.uuid)
 historical_jhash = historical['jhash']
@@ -157,4 +157,4 @@ UtilibaseTesting.comp('historical record', historical_jhash['z'], 'original z va
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

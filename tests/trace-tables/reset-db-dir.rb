@@ -10,4 +10,4 @@ UtilibaseTesting.reset_db_dir()
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

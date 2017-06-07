@@ -27,4 +27,4 @@ dbh.execute_batch(sql, {'uuid'=>SecureRandom.uuid()})
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

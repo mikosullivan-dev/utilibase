@@ -42,4 +42,4 @@ UtilibaseTesting.bool('autocommit', dbh.transaction_active?(), true)
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

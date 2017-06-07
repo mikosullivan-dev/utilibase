@@ -51,4 +51,4 @@ purged_not.each { |id|
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

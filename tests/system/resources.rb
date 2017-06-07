@@ -117,4 +117,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done(details)
+Testmin.done(details)

@@ -1,4 +1,4 @@
-# load TestMin
+# load Testmin
 require_relative './testmin.rb'
 
 # load configuration

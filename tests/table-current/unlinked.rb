@@ -27,7 +27,7 @@ field_name = 'unlinked'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
@@ -49,7 +49,7 @@ end
 # index: current_unlinked
 #
 if true
-	TestMin.hr('current_unlinked')
+	Testmin.hr('current_unlinked')
 	
 	# check
 	UtilibaseTesting.check_index(
@@ -70,7 +70,7 @@ end
 # must be i or r
 #
 if true
-	TestMin.hr('must be i or r')
+	Testmin.hr('must be i or r')
 	
 	# check
 	begin
@@ -90,7 +90,7 @@ end
 # unlinked cannot be defined if dependency is i
 #
 if true
-	TestMin.hr('unlinked cannot be defined if dependency is i')
+	Testmin.hr('unlinked cannot be defined if dependency is i')
 	
 	# check
 	begin
@@ -110,7 +110,7 @@ end
 # unlinked cannot be defined if dependency is m
 #
 if true
-	TestMin.hr('unlinked cannot be defined if dependency is m')
+	Testmin.hr('unlinked cannot be defined if dependency is m')
 	
 	# check
 	begin
@@ -128,4 +128,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

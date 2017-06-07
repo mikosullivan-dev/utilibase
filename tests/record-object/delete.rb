@@ -38,4 +38,4 @@ UtilibaseTesting.record_in_history('record should be in history once', db, rcrd.
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

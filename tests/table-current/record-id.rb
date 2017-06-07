@@ -30,7 +30,7 @@ table_name = 'current'
 # structure
 #
 if true
-	TestMin.hr 'structure'
+	Testmin.hr 'structure'
 	
 	# field_structure(dbh, table_name, field_name, pk, type, notnull, default)
 	UtilibaseTesting.field_structure(
@@ -51,7 +51,7 @@ end
 # uuid format
 #
 if true
-	TestMin.hr 'uuid format'
+	Testmin.hr 'uuid format'
 	
 	# check
 	begin
@@ -72,4 +72,4 @@ end
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

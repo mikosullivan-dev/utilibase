@@ -26,4 +26,4 @@ UtilibaseTesting.comp('is a', rcrd.uuid, rcrd_uuid)
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()

@@ -42,4 +42,4 @@ UtilibaseTesting.bool(
 
 # done
 # puts '[done]'
-TestMin.done()
+Testmin.done()
