@@ -6,7 +6,7 @@
 		"timestamps.rb",
 		"links.rb",
 		"version-uuid.rb",
-		"record-uuid.rb",
+		"record-id.rb",
 		"update-stat.rb"
 	]
 }

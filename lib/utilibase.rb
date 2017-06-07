@@ -140,8 +140,7 @@ class Utilibase
 			record_id
 			text
 			primary key
-			not null
-			check( record_id like '________-____-____-____-____________' ),
+			not null,
 			
 			-- jhash
 			-- jhash holds the canonical information about the record. All other
@@ -244,8 +243,7 @@ class Utilibase
 			-- record_id
 			record_id
 			text
-			not null
-			check( record_id like '________-____-____-____-____________' ),
+			not null,
 			
 			-- jhash
 			jhash
