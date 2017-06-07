@@ -2,7 +2,7 @@
 	"dir-order" : 800,
 	"files" : [
 		"reset-db-dir.rb",
-		"record-uuid.rb",
+		"record-id.rb",
 		"jhash.rb",
 		"update-stat.rb",
 		"links.rb",

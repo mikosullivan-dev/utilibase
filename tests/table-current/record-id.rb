@@ -5,8 +5,8 @@ require_relative '../testing.lib.rb'
 # enable taint mode
 $SAFE = 1
 
-# purpose: test the record_uuid field
-# record_uuid
+# purpose: test the record_id field
+# record_id
 #	d required
 #	d primary key
 #	d not null
@@ -36,7 +36,7 @@ if true
 	UtilibaseTesting.field_structure(
 		dbh,             # dbh
 		table_name,      # table name
-		'record_uuid',    # field name
+		'record_id',    # field name
 		1,               # pk
 		'text',          # type
 		1,               # 1 if not null, 0 if nullable
@@ -55,7 +55,7 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links) values(:uuid, '{}', '')"
+		sql = "insert into current(record_id, jhash, links) values(:uuid, '{}', '')"
 		
 		# NOTE: The supposed uuid in this statement isn't valid. Note the + in it.
 		dbh.execute_batch(sql, 'uuid'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f')

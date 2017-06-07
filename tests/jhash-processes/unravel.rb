@@ -20,7 +20,7 @@ org = {
 			'name' => 'apple',
 			'color' => 'red',
 			'taste' => 'tart',
-			'distributor' => {'$uuid' => '1bf14725-554b-448c-9f04-62b51a7808a1'},
+			'distributor' => {'$id' => '1bf14725-554b-448c-9f04-62b51a7808a1'},
 		},
 		
 		'grape' => {
@@ -28,14 +28,14 @@ org = {
 			'stores' => ['Kroger', 'Food Lion', {'store'=>'Dart', 'name'=>'dart'}],
 			'color' => 'purple',
 			'taste' => 'sweet',
-			'distributor' => {'$uuid' => '1bf14725-554b-448c-9f04-62b51a7808a1'},
+			'distributor' => {'$id' => '1bf14725-554b-448c-9f04-62b51a7808a1'},
 		},
 		
 		'stages' => ['early', 'timely', 'late'],
 	},
 	
 	'distributor' => {
-		'$uuid' => '1bf14725-554b-448c-9f04-62b51a7808a1',
+		'$id' => '1bf14725-554b-448c-9f04-62b51a7808a1',
 		'name' => 'distributor',
 	},
 }
@@ -59,7 +59,7 @@ end
 # comp_uuids
 #
 def comp_uuids(test_name, is, should)
-	return UtilibaseTesting.comp(test_name, is['$uuid'], should['$uuid'])
+	return UtilibaseTesting.comp(test_name, is['$id'], should['$id'])
 end
 #
 # comp_uuids
@@ -78,10 +78,10 @@ if true
 	
 	# should hash
 	should_hash = {
-		'$uuid'       => el['$uuid'],
+		'$id'       => el['$id'],
 		'name'        => 'org',
-		'fruit'       => {'$uuid'=>by_name['fruit']['$uuid']},
-		'distributor' => {'$uuid'=>by_name['distributor']['$uuid']},
+		'fruit'       => {'$id'=>by_name['fruit']['$id']},
+		'distributor' => {'$id'=>by_name['distributor']['$id']},
 	}
 	
 	# compare
@@ -105,10 +105,10 @@ if true
 	
 	# build hash for should
 	should_hash = {
-		'$uuid'=>el['$uuid'],
+		'$id'=>el['$id'],
 		'name'=>'fruit',
-		'apple'=>{'$uuid'=>by_name['apple']['$uuid']},
-		'grape'=>{'$uuid'=>by_name['grape']['$uuid']},
+		'apple'=>{'$id'=>by_name['apple']['$id']},
+		'grape'=>{'$id'=>by_name['grape']['$id']},
 		'stages' => ['early', 'timely', 'late'],
 	}
 	
@@ -129,11 +129,11 @@ if true
 	
 	# build hash for should
 	should_hash = {
-		'$uuid'=>el['$uuid'],
+		'$id'=>el['$id'],
 		'name' => 'apple',
 		'color' => 'red',
 		'taste' => 'tart',
-		'distributor' => {'$uuid'=>by_name['distributor']['$uuid']},
+		'distributor' => {'$id'=>by_name['distributor']['$id']},
 	}
 	
 	# compare
@@ -153,12 +153,12 @@ if true
 	
 	# build hash for should
 	should_hash = {
-		'$uuid'=>el['$uuid'],
+		'$id'=>el['$id'],
 		'name' => 'grape',
-		'stores' => ['Kroger', 'Food Lion', {'$uuid'=>by_name['dart']['$uuid']}],
+		'stores' => ['Kroger', 'Food Lion', {'$id'=>by_name['dart']['$id']}],
 		'color' => 'purple',
 		'taste' => 'sweet',
-		'distributor' => {'$uuid'=>by_name['distributor']['$uuid']},
+		'distributor' => {'$id'=>by_name['distributor']['$id']},
 	}
 	
 	# compare

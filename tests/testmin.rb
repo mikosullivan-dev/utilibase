@@ -250,6 +250,11 @@ module TestMin
 					next
 				end
 				
+				# must be file, not directory
+				if not File.file?(file_path)
+					next
+				end
+				
 				# add to list of files in directory
 				in_dir[file_path] = true
 				
@@ -723,7 +728,7 @@ module TestMin
 	# run_tests
 	#
 	def TestMin.run_tests()
-		TestMin.hr(__method__.to_s)
+		# TestMin.hr(__method__.to_s)
 		
 		# get command line options
 		TestMin.set_cmd_opts()
@@ -1196,6 +1201,28 @@ end
 #
 # TestMin
 ################################################################################
+
+
+################################################################################
+# Array
+#
+class ::Array
+	def show()
+		return '[' + self.join('|') + ']'
+	end
+	
+	def Array.as_a(el)
+		if el.is_a?(Array)
+			return el
+		else
+			return [el]
+		end
+	end
+end
+#
+# Array
+################################################################################
+
 
 
 ################################################################################

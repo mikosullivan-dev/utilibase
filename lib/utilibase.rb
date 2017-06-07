@@ -1212,16 +1212,16 @@ module Utilibase::Utils
 		objects[org.object_id] = true
 		
 		# if no uuid, give it one
-		if org['$uuid'].nil?()
-			org['$uuid'] = SecureRandom.uuid()
+		if org['$id'].nil?()
+			org['$id'] = SecureRandom.uuid()
 		end
 		
 		# store pclone in uuids hash
-		if uuids[org['$uuid']].nil?
+		if uuids[org['$id']].nil?
 			pclone = {}
-			uuids[org['$uuid']] = pclone
+			uuids[org['$id']] = pclone
 		else
-			pclone = uuids[org['$uuid']]
+			pclone = uuids[org['$id']]
 			# raise 'not yet implemented redundant hashes'
 		end
 		
@@ -1232,7 +1232,7 @@ module Utilibase::Utils
 			# unravel hash
 			if my_val.is_a?(Hash)
 				unravel_hash(my_val, uuids, objects)
-				pclone[my_key] = {'$uuid' => my_val['$uuid']}
+				pclone[my_key] = {'$id' => my_val['$id']}
 			
 			# unravel array
 			elsif my_val.is_a?(Array)
@@ -1257,7 +1257,7 @@ module Utilibase::Utils
 			# unravel hash
 			if my_val.is_a?(Hash)
 				unravel_hash(my_val, uuids, objects)
-				rv.push({'$uuid' => my_val['$uuid']})
+				rv.push({'$id' => my_val['$id']})
 			
 			# unravel array
 			elsif my_val.is_a?(Array)
@@ -1294,7 +1294,7 @@ module Utilibase::Utils
 		org.each do |el|
 			# hash
 			if el.is_a?(Hash)
-				uuids[el['$uuid']] = true
+				uuids[el['$id']] = true
 				
 			# array
 			elsif el.is_a?(Array)
@@ -1387,7 +1387,7 @@ module Utilibase::Utils
 
 	# merge_jhashes
 	# NOTE: This function assumes that these hashes have identical values
-	# $uuid.
+	# $id.
 	def self.merge_jhashes(jhash_old, jhash_new)
 		# TestMin.hr(__method__.to_s)
 
@@ -1396,8 +1396,8 @@ module Utilibase::Utils
 		
 		# loop through new keys
 		jhash_new.keys.each do |my_key|
-			# skip $uuid and hash commands
-			if (my_key == '$uuid') or (my_key == '$hash')
+			# skip $id and hash commands
+			if (my_key == '$id') or (my_key == '$hash')
 				next
 			end
 			
@@ -1538,7 +1538,7 @@ class Utilibase::Record
 	# save_new
 	# NOTE: This method assumes that it is already known that this record does
 	# not yet in the database. This method saves a completely new record
-	# consisting of just the $uuid field.
+	# consisting of just the $id field.
 	def save_new(struct={})
 		# TestMin.hr(__method__.to_s)
 		
@@ -1546,7 +1546,7 @@ class Utilibase::Record
 		struct = struct.clone
 		
 		# ensure that structure has uuid
-		struct['$uuid'] = @uuid
+		struct['$id'] = @uuid
 		
 		# create json string
 		json = JSON.generate(struct)
@@ -1607,8 +1607,8 @@ class Utilibase::Record
 		# merge
 		struct = Utilibase::Utils.merge_jhashes(existing, struct)
 		
-		# ensure that structure has $uuid
-		struct['$uuid'] = self.uuid
+		# ensure that structure has $id
+		struct['$id'] = self.uuid
 		
 		# get links
 		links = Utilibase::Utils.links_array(struct)

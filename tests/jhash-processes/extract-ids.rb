@@ -20,16 +20,16 @@ by_name = {
 }
 
 org = {
-	'$uuid' => by_name['org'],
+	'$id' => by_name['org'],
 	'name' => 'org',
 	
 	'fruit' => [
-		{'$uuid' => by_name['apple']},
-		{'$uuid' => by_name['grape']},
-		[ 1, {'$uuid' => by_name['dart']}, [[{'$uuid' => by_name['grape']}]], 'send me on my way'],
+		{'$id' => by_name['apple']},
+		{'$id' => by_name['grape']},
+		[ 1, {'$id' => by_name['dart']}, [[{'$id' => by_name['grape']}]], 'send me on my way'],
 	],
 	
-	'idea' => {'$uuid'=>by_name['wheel']},
+	'idea' => {'$id'=>by_name['wheel']},
 }
 #
 # org
