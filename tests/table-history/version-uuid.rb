@@ -6,8 +6,8 @@ require_relative '../testing.lib.rb'
 # enable taint mode
 $SAFE = 1
 
-# purpose: test the record_uuid field
-# record_uuid
+# purpose: test the record_id field
+# record_id
 #	d required
 #	d primary key
 #	d not null
@@ -38,7 +38,7 @@ if true
 	UtilibaseTesting.field_structure(
 		dbh,             # dbh
 		table_name,      # table name
-		'version_uuid',  # field name
+		'version_id',  # field name
 		1,               # pk
 		'text',          # type
 		1,               # 1 if not null, 0 if nullable
@@ -50,26 +50,26 @@ end
 
 
 #------------------------------------------------------------------------------
-# valid uuid
+# valid id
 #
 if true
-	puts 'valid uuid'
+	puts 'valid id'
 	
 	# check
 	begin
 		# sql
 		sql = <<~SQL
 		insert into
-			history( version_uuid,  record_uuid,  jhash, links, ts_start,  ts_end  )
-			values ( :version_uuid, :record_uuid, '{}',  '',    :ts_start, :ts_end )
+			history( version_id,  record_id,  jhash, links, ts_start,  ts_end  )
+			values ( :version_id, :record_id, '{}',  '',    :ts_start, :ts_end )
 		SQL
 		
 		# run
-		# NOTE: The supposed uuid in this statement isn't valid. Note the + in it.
+		# NOTE: The supposed id in this statement isn't valid. Note the + in it.
 		dbh.execute_batch(
 			sql,
-			'version_uuid'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f',
-			'record_uuid'=>SecureRandom.uuid(),
+			'version_id'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f',
+			'record_id'=>SecureRandom.uuid(),
 			'ts_start'=>'2017-03-23T04:04:18+18.098Z',
 			'ts_end'=>'2017-03-24T04:04:18+18.098Z',
 		)
@@ -81,11 +81,11 @@ if true
 		# puts e.message
 		# puts '----------------------------------'
 		
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: history')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: history')
 	end
 end
 #
-# valid uuid
+# valid id
 #------------------------------------------------------------------------------
 
 

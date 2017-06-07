@@ -6,8 +6,8 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # purpose: test the table traces
-#	trace_uuid
-#		check uuid format
+#	trace_id
+#		check id format
 #	init_time
 #		check default value
 #		check date format
@@ -29,11 +29,11 @@ table_name = 'traces'
 
 
 #------------------------------------------------------------------------------
-# structure: trace_uuid
+# structure: trace_id
 #
 if true
-	Testmin.hr 'structure: trace_uuid'
-	field_name = 'trace_uuid'
+	Testmin.hr 'structure: trace_id'
+	field_name = 'trace_id'
 	
 	UtilibaseTesting.field_structure(
 		dbh,           # dbh
@@ -45,29 +45,29 @@ if true
 		nil)           # default
 end
 #
-# structure: trace_uuid
+# structure: trace_id
 #------------------------------------------------------------------------------
 
 
 #------------------------------------------------------------------------------
-# trace_uuid: uuid format
+# trace_id: id format
 #
 if true
-	Testmin.hr 'trace_uuid: uuid format'
+	Testmin.hr 'trace_id: id format'
 	
 	# check
 	begin
 		# sql
 		sql = <<~SQL
 		insert into
-			traces( trace_uuid  )
-			values ( :uuid )
+			traces( trace_id  )
+			values ( :id )
 		SQL
 		
 		# run
 		dbh.execute_batch(
 			sql,
-			'uuid'=>'xxx'
+			'id'=>'xxx'
 		)
 		
 		# should not get to this point
@@ -77,16 +77,16 @@ if true
 		# puts e.message
 		# puts '------------------------------'
 		
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: traces')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: traces')
 	end
 end
 #
-# trace_uuid: uuid format
+# trace_id: id format
 #------------------------------------------------------------------------------
 
 
 #------------------------------------------------------------------------------
-# init_time: trace_uuid
+# init_time: trace_id
 #
 if true
 	Testmin.hr 'structure: init_time'
@@ -101,7 +101,7 @@ if true
 		'current_timestamp')  # default
 end
 #
-# init_time: trace_uuid
+# init_time: trace_id
 #------------------------------------------------------------------------------
 
 
@@ -111,16 +111,16 @@ end
 if true
 	Testmin.hr 'init_time: default'
 	
-	# generate trace_uuid
-	trace_uuid = SecureRandom.uuid()
+	# generate trace_id
+	trace_id = SecureRandom.uuid()
 	
 	# create record
-	sql = 'insert into traces(trace_uuid) values (:uuid)'
-	dbh.execute_batch(sql, 'uuid'=>trace_uuid)
+	sql = 'insert into traces(trace_id) values (:id)'
+	dbh.execute_batch(sql, 'id'=>trace_id)
 	
 	# get record
-	sql = 'select * from traces where trace_uuid=:uuid'
-	row = dbh.get_first_row(sql, 'uuid'=>trace_uuid)
+	sql = 'select * from traces where trace_id=:id'
+	row = dbh.get_first_row(sql, 'id'=>trace_id)
 	
 	# check pattern of init_time
 	if not row['init_time'].match(/\A\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}\.\d{3}Z\z/)

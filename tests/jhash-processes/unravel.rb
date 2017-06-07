@@ -56,13 +56,13 @@ end
 
 
 #------------------------------------------------------------------------------
-# comp_uuids
+# comp_ids
 #
-def comp_uuids(test_name, is, should)
+def comp_ids(test_name, is, should)
 	return UtilibaseTesting.comp(test_name, is['$id'], should['$id'])
 end
 #
-# comp_uuids
+# comp_ids
 #------------------------------------------------------------------------------
 
 
@@ -74,7 +74,7 @@ if true
 	el = by_name['org']
 	
 	# tests
-	comp_uuids('org => fruit', el['fruit'], by_name['fruit'])
+	comp_ids('org => fruit', el['fruit'], by_name['fruit'])
 	
 	# should hash
 	should_hash = {
@@ -99,9 +99,9 @@ if true
 	Testmin.hr 'fruit'
 	el = by_name['fruit']
 	
-	# check uuids
-	comp_uuids('fruit => apple', el['apple'], by_name['apple'])
-	comp_uuids('fruit => grape', el['grape'], by_name['grape'])
+	# check ids
+	comp_ids('fruit => apple', el['apple'], by_name['apple'])
+	comp_ids('fruit => grape', el['grape'], by_name['grape'])
 	
 	# build hash for should
 	should_hash = {

@@ -7,7 +7,7 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # purpose: test the jhash field
-# record_uuid
+# record_id
 #	d required
 #	d not primary key
 #	d not null
@@ -57,8 +57,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links) values(:uuid, null, '')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links) values(:id, null, '')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('starts with {', e, 'NOT NULL constraint failed: current.jhash')
@@ -77,8 +77,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links) values(:uuid, '}', '')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links) values(:id, '}', '')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('starts with {', e, 'CHECK constraint failed: current')
@@ -97,8 +97,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links) values(:uuid, '{', '')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links) values(:id, '{', '')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('ends with }', e, 'CHECK constraint failed: current')

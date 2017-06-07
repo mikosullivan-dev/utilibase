@@ -16,7 +16,7 @@ $SAFE = 1
 #		add-to-ending
 
 
-# uuids
+# ids
 fruit = SecureRandom.uuid()
 apple = SecureRandom.uuid()
 
@@ -29,7 +29,7 @@ if true
 	puts 'input is empty array'
 	
 	# original structure
-	org = ['a', 'b', 'c', {'$uuid'=>fruit}]
+	org = ['a', 'b', 'c', {'$id'=>fruit}]
 	input = []
 	
 	# merge
@@ -50,8 +50,8 @@ if true
 	puts 'simple replacement in top level array'
 	
 	# original structure
-	org = ['a', 'b', 'c', {'$uuid'=>fruit}]
-	input = [{'$uuid'=>apple}, 'd', 'e', 'f', 'g', 'h']
+	org = ['a', 'b', 'c', {'$id'=>fruit}]
+	input = [{'$id'=>apple}, 'd', 'e', 'f', 'g', 'h']
 	
 	# merge
 	merged = Utilibase::Utils.merge_arrays(org, input)

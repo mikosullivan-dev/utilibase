@@ -68,16 +68,16 @@ end
 if true
 	Testmin.hr 'defaults to d'
 	
-	# generate uuid
-	record_uuid = SecureRandom.uuid()
+	# generate id
+	record_id = SecureRandom.uuid()
 	
 	# add record
-	sql = "insert into current(record_uuid, jhash, links) values(:uuid, '{}', '')"
-	dbh.execute_batch(sql, 'uuid'=>record_uuid)
+	sql = "insert into current(record_id, jhash, links) values(:id, '{}', '')"
+	dbh.execute_batch(sql, 'id'=>record_id)
 	
 	# get record
-	sql = "select * from current where record_uuid=:uuid"
-	record = dbh.get_first_row(sql, record_uuid);
+	sql = "select * from current where record_id=:id"
+	record = dbh.get_first_row(sql, record_id);
 	UtilibaseTesting.comp( 'default value', record['dependency'], 'd' )
 
 end
@@ -94,8 +94,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, dependency) values(:uuid, '{}', '', 'x')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, dependency) values(:id, '{}', '', 'x')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message
@@ -116,11 +116,11 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, dependency) values(:ruuid, '{}', :luuids, 'm')"
+		sql = "insert into current(record_id, jhash, links, dependency) values(:rid, '{}', :lids, 'm')"
 		dbh.execute_batch(
 			sql,
-			'ruuid'=>SecureRandom.uuid(),
-			'luuids'=>SecureRandom.uuid(),
+			'rid'=>SecureRandom.uuid(),
+			'lids'=>SecureRandom.uuid(),
 		)
 		
 		# should not get this far

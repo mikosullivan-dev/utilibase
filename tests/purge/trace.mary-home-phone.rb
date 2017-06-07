@@ -19,7 +19,7 @@ dbh = db.dbh
 xyz = XYZ.new(dbh)
 
 # remove records from Mary's phones
-mary = db.record(xyz.uuid('mary'))
+mary = db.record(xyz.id('mary'))
 mary.update({'phones':[]})
 
 # set_unlinked
@@ -30,7 +30,7 @@ mhp = xyz.current('mary-home-phone')
 UtilibaseTesting.comp 'mary-home-phone - unlinked', mhp['unlinked'], 'r'
 
 # trace record
-db.trace_record mhp['record_uuid']
+db.trace_record mhp['record_id']
 
 # mary-home-phone should not be in current anymore
 UtilibaseTesting.bool 'should not be in current anymore', xyz.in_current('mary-home-phone'), false

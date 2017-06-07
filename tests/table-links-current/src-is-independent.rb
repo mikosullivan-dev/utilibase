@@ -47,19 +47,19 @@ end
 if true
 	Testmin.hr 'not null'
 	
-	# generate some uuids
-	valid_uuids = [SecureRandom.uuid(), SecureRandom.uuid()]
+	# generate some ids
+	valid_ids = [SecureRandom.uuid(), SecureRandom.uuid()]
 	
 	# create records in current
-	sql = "insert into current(record_uuid, jhash, links) values(:valid0, '{}', '')"
-	dbh.execute(sql, {'valid0'=>valid_uuids[0]})
-	sql = "insert into current(record_uuid, jhash, links) values(:valid1, '{}', '')"
-	dbh.execute(sql, {'valid1'=>valid_uuids[1]})
+	sql = "insert into current(record_id, jhash, links) values(:valid0, '{}', '')"
+	dbh.execute(sql, {'valid0'=>valid_ids[0]})
+	sql = "insert into current(record_id, jhash, links) values(:valid1, '{}', '')"
+	dbh.execute(sql, {'valid1'=>valid_ids[1]})
 	
 	# create link record with null src_is_independent
 	begin
-		sql = "insert into links_current(src_uuid, src_is_independent, tgt_uuid) values(:valid0, null, :valid1)"
-		qty = dbh.execute(sql, {'valid0'=>valid_uuids[0], 'valid1'=>valid_uuids[1]})
+		sql = "insert into links_current(src_id, src_is_independent, tgt_id) values(:valid0, null, :valid1)"
+		qty = dbh.execute(sql, {'valid0'=>valid_ids[0], 'valid1'=>valid_ids[1]})
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message
@@ -77,19 +77,19 @@ end
 if true
 	Testmin.hr '0 or 1'
 	
-	# generate some uuids
-	valid_uuids = [SecureRandom.uuid(), SecureRandom.uuid()]
+	# generate some ids
+	valid_ids = [SecureRandom.uuid(), SecureRandom.uuid()]
 	
 	# create records in current
-	sql = "insert into current(record_uuid, jhash, links) values(:valid0, '{}', '')"
-	dbh.execute(sql, {'valid0'=>valid_uuids[0]})
-	sql = "insert into current(record_uuid, jhash, links) values(:valid1, '{}', '')"
-	dbh.execute(sql, {'valid1'=>valid_uuids[1]})
+	sql = "insert into current(record_id, jhash, links) values(:valid0, '{}', '')"
+	dbh.execute(sql, {'valid0'=>valid_ids[0]})
+	sql = "insert into current(record_id, jhash, links) values(:valid1, '{}', '')"
+	dbh.execute(sql, {'valid1'=>valid_ids[1]})
 	
 	# create link record with 2 as src_is_independent
 	begin
-		sql = "insert into links_current(src_uuid, src_is_independent, tgt_uuid) values(:valid0, 2, :valid1)"
-		qty = dbh.execute(sql, {'valid0'=>valid_uuids[0], 'valid1'=>valid_uuids[1]})
+		sql = "insert into links_current(src_id, src_is_independent, tgt_id) values(:valid0, 2, :valid1)"
+		qty = dbh.execute(sql, {'valid0'=>valid_ids[0], 'valid1'=>valid_ids[1]})
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message

@@ -136,12 +136,12 @@ class Utilibase
 		-- current
 		-- This table holds the current records.
 		create table current (
-			-- record_uuid
-			record_uuid
+			-- record_id
+			record_id
 			text
 			primary key
 			not null
-			check( record_uuid like '________-____-____-____-____________' ),
+			check( record_id like '________-____-____-____-____________' ),
 			
 			-- jhash
 			-- jhash holds the canonical information about the record. All other
@@ -225,7 +225,7 @@ class Utilibase
 		);
 		
 		-- indexes
-		create index current_record_uuid_update_stat on current (record_uuid, update_stat);
+		create index current_record_id_update_stat on current (record_id, update_stat);
 		create index current_ts_start on current (ts_start);
 		create index current_dependency on current (dependency);
 		create index current_update_stat on current (update_stat);
@@ -234,18 +234,18 @@ class Utilibase
 		-- history
 		-- This table holds the historical records.
 		create table history (
-			-- version_uuid
-			version_uuid
+			-- version_id
+			version_id
 			text
 			primary key
 			not null
-			check( version_uuid like '________-____-____-____-____________' ),
+			check( version_id like '________-____-____-____-____________' ),
 			
-			-- record_uuid
-			record_uuid
+			-- record_id
+			record_id
 			text
 			not null
-			check( record_uuid like '________-____-____-____-____________' ),
+			check( record_id like '________-____-____-____-____________' ),
 			
 			-- jhash
 			jhash
@@ -285,7 +285,7 @@ class Utilibase
 		);
 		
 		-- indexes
-		create index history_record_uuid on history (record_uuid);
+		create index history_record_id on history (record_id);
 		create index history_update_stat on history (update_stat);
 		create index history_ts_start on history (ts_start);
 		create index history_ts_end on history (ts_end);
@@ -294,18 +294,18 @@ class Utilibase
 		-- Table of links in the "current" table. This denormalized data is used
 		-- as part of the trace and purge process.
 		create table links_current (
-			-- src_uuid
-			src_uuid
+			-- src_id
+			src_id
 			text
 			not null
-			references current(record_uuid)
+			references current(record_id)
 			on delete cascade,
 			
-			-- tgt_uuid
-			tgt_uuid
+			-- tgt_id
+			tgt_id
 			text
 			not null
-			references current(record_uuid)
+			references current(record_id)
 			on delete cascade,
 			
 			-- src_is_independent
@@ -315,7 +315,7 @@ class Utilibase
 			check( src_is_independent in (0, 1) ),
 			
 			-- set primary key
-			primary key(src_uuid, tgt_uuid)
+			primary key(src_id, tgt_id)
 		);
 		
 		-- traces
@@ -323,12 +323,12 @@ class Utilibase
 		-- table is create for each time a record is traced. After the trace,
 		-- the record is deleted.
 		create table traces (
-			-- trace_uuid
-			trace_uuid
+			-- trace_id
+			trace_id
 			text
 			primary key
 			not null
-			check( trace_uuid like '________-____-____-____-____________' ),
+			check( trace_id like '________-____-____-____-____________' ),
 			
 			-- time of trace
 			init_time
@@ -350,23 +350,23 @@ class Utilibase
 				set
 					init_time = strftime('%Y-%m-%dT%H:%M:%S+%fZ', new.init_time)
 				where
-					trace_uuid = new.trace_uuid;
+					trace_id = new.trace_id;
 		end;
 		
 		-- trace_records
 		create table trace_records (
-			-- trace_uuid
-			trace_uuid
+			-- trace_id
+			trace_id
 			text
 			not null
-			references traces(trace_uuid)
+			references traces(trace_id)
 			on delete cascade,
 			
-			-- record_uuid
-			record_uuid
+			-- record_id
+			record_id
 			text
 			not null
-			references current(record_uuid)
+			references current(record_id)
 			on delete cascade,
 			
 			-- src_is_independent
@@ -376,7 +376,7 @@ class Utilibase
 			check( independent in (0, 1) ),
 			
 			-- primary key
-			primary key(trace_uuid, record_uuid)
+			primary key(trace_id, record_id)
 		);
 		
 		-- after insert trigger for trace_records
@@ -385,7 +385,7 @@ class Utilibase
 		begin
 			update   traces
 			set      independent_found = 1
-			where    trace_uuid = new.trace_uuid;
+			where    trace_id = new.trace_id;
 		end;
 		SQL
 		
@@ -405,22 +405,22 @@ class Utilibase
 	
 	#---------------------------------------------------------------------------
 	# trace_record
-	# Given a record_uuid, traces if that record is descended from an
+	# Given a record_id, traces if that record is descended from an
 	# independent record. If it is, the record is marked as traced. If it isn't
 	# then the record and all ancestor records are deleted.
 	#
-	def trace_record(record_uuid)
-		# Testmin.hr(__method__.to_s + ': ' + record_uuid)
+	def trace_record(record_id)
+		# Testmin.hr(__method__.to_s + ': ' + record_id)
 		
 		# get database handle
 		dbh = self.dbh
 		
-		# trace uuid
-		trace_uuid = SecureRandom.uuid()
+		# trace id
+		trace_id = SecureRandom.uuid()
 		
 		# get the record that is being traced
-		sql = 'select dependency from current where record_uuid=:record_uuid'
-		dependency = dbh.select_field(sql, 'record_uuid'=>record_uuid)
+		sql = 'select dependency from current where record_id=:record_id'
+		dependency = dbh.select_field(sql, 'record_id'=>record_id)
 		
 		# if org record doesn't exist, we're done
 		if dependency.nil?
@@ -433,12 +433,12 @@ class Utilibase
 		end
 		
 		# create trace record
-		# sql = 'insert into traces (trace_uuid) values (:trace_uuid)'
-		# dbh.execute(sql, 'trace_uuid'=>trace_uuid)
-		self.insert_trace_record_sth().execute('trace_uuid'=>trace_uuid)
+		# sql = 'insert into traces (trace_id) values (:trace_id)'
+		# dbh.execute(sql, 'trace_id'=>trace_id)
+		self.insert_trace_record_sth().execute('trace_id'=>trace_id)
 		
 		# insert initial record
-		self.initial_trace_record_sth.execute('trace_uuid'=>trace_uuid,'record_uuid'=>record_uuid)
+		self.initial_trace_record_sth.execute('trace_id'=>trace_id,'record_id'=>record_id)
 		
 		# instantiate statement handle
 		insert_sth = self.insert_trace_records_sth()
@@ -449,24 +449,24 @@ class Utilibase
 		# loop until we've traced the record or have stopped finding records to trace
 		begin
 			# add records
-			insert_sth.execute(sql, 'trace_uuid'=>trace_uuid)
+			insert_sth.execute(sql, 'trace_id'=>trace_id)
 			
 			# get result count
 			result_count = dbh.changes
 			
 			# get trace's independent_found
-			independent_found = independent_sth.execute!('trace_uuid'=>trace_uuid)
+			independent_found = independent_sth.execute!('trace_id'=>trace_id)
 			independent_found = independent_found[0][0]
 		end while (result_count > 0) and (independent_found == 0)
 		
 		# if we did not find an independent record, delete all of the records
 		# in trace_records
 		if independent_found == 0
-			self.delete_untraced_sth().execute('trace_uuid'=>trace_uuid)
+			self.delete_untraced_sth().execute('trace_id'=>trace_id)
 		
 		# else mark just the original record as not unlinked
 		else
-			self.update_traced_sth().execute('record_uuid'=>record_uuid)
+			self.update_traced_sth().execute('record_id'=>record_id)
 		end
 	end
 	#
@@ -478,9 +478,9 @@ class Utilibase
 	# record
 	# Returns a new utilibase record object.
 	#
-	def record(record_uuid)
+	def record(record_id)
 		# Testmin.hr(__method__.to_s)
-		return Utilibase::Record.new(self, record_uuid)
+		return Utilibase::Record.new(self, record_id)
 	end
 	#
 	# record
@@ -495,12 +495,12 @@ class Utilibase
 	## all the fields in the "current" table. It does <em>not</em> return a
 	## record object.
 	#
-	def row(record_uuid)
+	def row(record_id)
 		# Testmin.hr(__method__.to_s)
 		
 		# get record
-		sql = 'select * from current where record_uuid=:record_uuid'
-		row = dbh.get_first_row(sql, 'record_uuid'=>record_uuid)
+		sql = 'select * from current where record_id=:record_id'
+		row = dbh.get_first_row(sql, 'record_id'=>record_id)
 		
 		# if we got a record
 		if not row.nil?
@@ -542,7 +542,7 @@ class Utilibase
 		
 		# sql to find initially unlinked records
 		sql = <<~SQL
-		select record_uuid, links
+		select record_id, links
 		from   current
 		where  unlinked = 'i'
 		SQL
@@ -556,11 +556,11 @@ class Utilibase
 			dbh.execute(sql) do |row|
 				row['links'].split(' ').each { |link|
 					# update records that have been unlinked
-					update_initials.execute('uuid'=>link)
+					update_initials.execute('id'=>link)
 					updated_count += dbh.changes
 					
 					# delete links from links_current
-					delete_lc_sth.execute('src'=>row['record_uuid'], 'tgt'=>link)
+					delete_lc_sth.execute('src'=>row['record_id'], 'tgt'=>link)
 				}
 			end
 			
@@ -591,7 +591,7 @@ class Utilibase
 		
 		# sql to loop through updated records
 		sql = <<~SQL
-		select   record_uuid, links, jhash, update_stat
+		select   record_id, links, jhash, update_stat
 		from     current
 		where    (update_stat='u') and
 		         (dependency in ('i', 'd'))
@@ -599,13 +599,13 @@ class Utilibase
 		
 		# loop through updated records
 		dbh.execute(sql) do |row|
-			# get unlinked uuids
+			# get unlinked ids
 			unlinks = Utilibase::Utils.get_unlinks(row['jhash'], row['links'])
 			
 			# loop through unlinks
-			unlinks.each do |uuid|
-				update_sth.execute(uuid)
-				delete_lc_sth.execute('src'=>row['record_uuid'], 'tgt'=>uuid)
+			unlinks.each do |id|
+				update_sth.execute(id)
+				delete_lc_sth.execute('src'=>row['record_id'], 'tgt'=>id)
 			end
 		end
 	end
@@ -630,7 +630,7 @@ class Utilibase
 		
 		# sql to get unlinked records
 		sql = <<~SQL
-		select   record_uuid, unlinked
+		select   record_id, unlinked
 		from     current
 		where    unlinked is not null
 		limit    1
@@ -647,7 +647,7 @@ class Utilibase
 			end
 			
 			# trace record
-			self.trace_record(row['record_uuid'])
+			self.trace_record(row['record_id'])
 		end
 	end
 	#
@@ -665,7 +665,7 @@ class Utilibase
 		
 		# create sth if necessary
 		if not @sths.key?('insert_trace_record')
-			sql = 'insert into traces (trace_uuid) values (:trace_uuid)'
+			sql = 'insert into traces (trace_id) values (:trace_id)'
 			@sths['insert_trace_record'] = self.dbh.prepare(sql)
 		end
 		
@@ -691,7 +691,7 @@ class Utilibase
 			sql = <<~SQL
 			update   current
 			set      unlinked = 'i'
-			where    record_uuid = :uuid and
+			where    record_id = :id and
 					 unlinked is null and
 					 dependency = 'd'
 			SQL
@@ -721,8 +721,8 @@ class Utilibase
 			# sql to update records as unlinked
 			sql = <<~SQL
 			delete from links_current
-			where       src_uuid=:src and
-			            tgt_uuid=:tgt
+			where       src_id=:src and
+			            tgt_id=:tgt
 			SQL
 			
 			# create and store statement handle
@@ -752,7 +752,7 @@ class Utilibase
 			update   current
 			set      unlinked = 'i'
 			where    dependency = 'd' and
-					 record_uuid = :uuid
+					 record_id = :id
 			SQL
 			
 			# create and store statement handle
@@ -809,8 +809,8 @@ class Utilibase
 			# sql to insert initial trace record
 			sql = <<~SQL
 			insert into
-				trace_records  ( trace_uuid,   record_uuid,   independent  )
-				values         ( :trace_uuid,  :record_uuid,  0            );
+				trace_records  ( trace_id,   record_id,   independent  )
+				values         ( :trace_id,  :record_id,  0            );
 			SQL
 			
 			# prepare
@@ -837,30 +837,30 @@ class Utilibase
 			sql = <<~SQL
 			insert into
 				trace_records (
-					trace_uuid,
-					record_uuid,
+					trace_id,
+					record_id,
 					independent
 				)
 				
 				select
-					:trace_uuid as trace_uuid,
-					src_uuid,
+					:trace_id as trace_id,
+					src_id,
 					src_is_independent
 				from
 					links_current
 				where
-					tgt_uuid in (
-						select record_uuid
+					tgt_id in (
+						select record_id
 						from   trace_records
-						where  trace_uuid = :trace_uuid
+						where  trace_id = :trace_id
 					)
 					
 					and
 					
-					src_uuid not in (
-						select record_uuid
+					src_id not in (
+						select record_id
 						from   trace_records
-						where  trace_uuid = :trace_uuid
+						where  trace_id = :trace_id
 					);
 			SQL
 			
@@ -888,7 +888,7 @@ class Utilibase
 			sql = <<~SQL
 			select  independent_found
 			from    traces
-			where   trace_uuid = :trace_uuid
+			where   trace_id = :trace_id
 			SQL
 			
 			# prepare
@@ -915,7 +915,7 @@ class Utilibase
 			sql = <<~SQL
 			update   current
 			set      unlinked = null
-			where    record_uuid=:record_uuid
+			where    record_id=:record_id
 			SQL
 			
 			# prepare
@@ -943,10 +943,10 @@ class Utilibase
 			delete from
 				current
 			where
-				record_uuid in (
-					select  record_uuid
+				record_id in (
+					select  record_id
 					from    trace_records
-					where   trace_uuid = :trace_uuid
+					where   trace_id = :trace_id
 				)
 			SQL
 			
@@ -1117,15 +1117,15 @@ end
 class ExceptionPlus < StandardError
 	# attributes
 	attr_reader :error_id
-	attr_reader :uuid
+	attr_reader :id
 
 	# initialize
 	def initialize(msg_id, msg, opts={})
 		# hold on to error id
 		@error_id = msg_id
 
-		# generate uuid for just this instance
-		@uuid = SecureRandom.uuid()
+		# generate id for just this instance
+		@id = SecureRandom.uuid()
 
 		# call super method
 		super(msg_id + ':' + msg)
@@ -1178,17 +1178,17 @@ module Utilibase::Utils
 		# Testmin.hr(__method__.to_s)
 		
 		# initialize carry
-		uuids = {}
+		ids = {}
 		objects = {}
 		
 		# call hash unraveler
-		# unravel_hash(org, uuids, objects)
+		# unravel_hash(org, ids, objects)
 		if org.is_a?(Hash)
-			unravel_hash(org, uuids, objects)
+			unravel_hash(org, ids, objects)
 		
 		# unravel array
 		elsif org.is_a?(Array)
-			unravel_array(org, uuids, objects)
+			unravel_array(org, ids, objects)
 		
 		# else error
 		else
@@ -1196,11 +1196,11 @@ module Utilibase::Utils
 		end
 		
 		# return
-		return uuids
+		return ids
 	end
 	
 	# unravel_hash
-	def self.unravel_hash(org, uuids, objects)
+	def self.unravel_hash(org, ids, objects)
 		# Testmin.hr(__method__.to_s)
 		
 		# if we've already processed this object, don't do so again
@@ -1211,17 +1211,17 @@ module Utilibase::Utils
 		# note as done
 		objects[org.object_id] = true
 		
-		# if no uuid, give it one
+		# if no id, give it one
 		if org['$id'].nil?()
 			org['$id'] = SecureRandom.uuid()
 		end
 		
-		# store pclone in uuids hash
-		if uuids[org['$id']].nil?
+		# store pclone in ids hash
+		if ids[org['$id']].nil?
 			pclone = {}
-			uuids[org['$id']] = pclone
+			ids[org['$id']] = pclone
 		else
-			pclone = uuids[org['$id']]
+			pclone = ids[org['$id']]
 			# raise 'not yet implemented redundant hashes'
 		end
 		
@@ -1231,12 +1231,12 @@ module Utilibase::Utils
 			
 			# unravel hash
 			if my_val.is_a?(Hash)
-				unravel_hash(my_val, uuids, objects)
+				unravel_hash(my_val, ids, objects)
 				pclone[my_key] = {'$id' => my_val['$id']}
 			
 			# unravel array
 			elsif my_val.is_a?(Array)
-				pclone[my_key] = unravel_array(my_val, uuids, objects)
+				pclone[my_key] = unravel_array(my_val, ids, objects)
 			
 			# store scalar value
 			else
@@ -1246,7 +1246,7 @@ module Utilibase::Utils
 	end
 	
 	# unravel_array
-	def self.unravel_array(org, uuids, objects)
+	def self.unravel_array(org, ids, objects)
 		# Testmin.hr(__method__.to_s)
 		
 		# initialize return value
@@ -1256,13 +1256,13 @@ module Utilibase::Utils
 		org.each do |my_val|
 			# unravel hash
 			if my_val.is_a?(Hash)
-				unravel_hash(my_val, uuids, objects)
+				unravel_hash(my_val, ids, objects)
 				rv.push({'$id' => my_val['$id']})
 			
 			# unravel array
 			elsif my_val.is_a?(Array)
 				# initialize new array
-				rv.push(unravel_array(my_val, uuids, objects))
+				rv.push(unravel_array(my_val, ids, objects))
 			
 			# store scalar value
 			else
@@ -1278,27 +1278,27 @@ module Utilibase::Utils
 	def self.links_array(org)
 		# Testmin.hr(__method__.to_s)
 		
-		# initialize uuids
-		uuids = {}
+		# initialize ids
+		ids = {}
 		
 		# links_from_hash
-		links_from_array(org.values, uuids)
+		links_from_array(org.values, ids)
 		
-		# return array of uuids
-		return uuids.keys
+		# return array of ids
+		return ids.keys
 	end
 	
 	# links_from_array
-	def self.links_from_array(org, uuids)
+	def self.links_from_array(org, ids)
 		# loop through elements
 		org.each do |el|
 			# hash
 			if el.is_a?(Hash)
-				uuids[el['$id']] = true
+				ids[el['$id']] = true
 				
 			# array
 			elsif el.is_a?(Array)
-				links_from_array(el, uuids)
+				links_from_array(el, ids)
 			end
 		end
 	end
@@ -1490,10 +1490,10 @@ end
 class Utilibase::Record
 	# attributes
 	attr_reader :db
-	attr_reader :uuid
+	attr_reader :id
 
 	# initialize
-	def initialize(db, rcrd_uuid)
+	def initialize(db, rcrd_id)
 		# Testmin.hr(__method__.to_s)
 
 		# check that db is a Utilibase object
@@ -1503,7 +1503,7 @@ class Utilibase::Record
 
 		# set attributes
 		@db = db
-		@uuid = rcrd_uuid
+		@id = rcrd_id
 	end
 	
 	# dbh
@@ -1516,8 +1516,8 @@ class Utilibase::Record
 		# Testmin.hr(__method__.to_s)
 		
 		# get record count
-		sql = 'select count(*) as rcount from current where record_uuid=:uuid'
-		record_count = self.dbh.get_first_row(sql, 'uuid'=>@uuid)
+		sql = 'select count(*) as rcount from current where record_id=:id'
+		record_count = self.dbh.get_first_row(sql, 'id'=>@id)
 		
 		# return
 		return record_count['rcount'] > 0
@@ -1545,15 +1545,15 @@ class Utilibase::Record
 		# clone structure because we're going to muck around with it
 		struct = struct.clone
 		
-		# ensure that structure has uuid
-		struct['$id'] = @uuid
+		# ensure that structure has id
+		struct['$id'] = @id
 		
 		# create json string
 		json = JSON.generate(struct)
 		
 		# sql
-		sql = "insert into current(record_uuid, jhash, links, update_stat) values(:uuid, :jhash, '', 'n')"
-		self.dbh.execute(sql, 'uuid'=>@uuid, 'jhash'=>json)
+		sql = "insert into current(record_id, jhash, links, update_stat) values(:id, :jhash, '', 'n')"
+		self.dbh.execute(sql, 'id'=>@id, 'jhash'=>json)
 	end
 	
 	# update
@@ -1570,30 +1570,30 @@ class Utilibase::Record
 		sql = <<~SQL
 		insert into
 			history(
-				version_uuid,
-				record_uuid,
+				version_id,
+				record_id,
 				jhash,
 				links
 			)
 			
 			select
-				:version_uuid,
-				record_uuid,
+				:version_id,
+				record_id,
 				jhash,
 				links
 			from
 				current
 			where
-				record_uuid = :record_uuid and
+				record_id = :record_id and
 				update_stat is null;
 		SQL
 		
 		# add old record to history if this is the first update to is
-		self.dbh.execute(sql, 'version_uuid'=>SecureRandom.uuid(), 'record_uuid'=>self.uuid)
+		self.dbh.execute(sql, 'version_id'=>SecureRandom.uuid(), 'record_id'=>self.id)
 		
 		# get existing values
-		sql = "select jhash from current where record_uuid=:uuid";
-		existing = self.dbh.get_first_row(sql, 'uuid'=>self.uuid)
+		sql = "select jhash from current where record_id=:id";
+		existing = self.dbh.get_first_row(sql, 'id'=>self.id)
 		existing = existing[0]
 		
 		# should have gotten existing
@@ -1608,7 +1608,7 @@ class Utilibase::Record
 		struct = Utilibase::Utils.merge_jhashes(existing, struct)
 		
 		# ensure that structure has $id
-		struct['$id'] = self.uuid
+		struct['$id'] = self.id
 		
 		# get links
 		links = Utilibase::Utils.links_array(struct)
@@ -1621,7 +1621,7 @@ class Utilibase::Record
 		        links=:links,
 		        update_stat = case when update_stat is null then 'u' else update_stat end
 		where
-		        record_uuid = :uuid
+		        record_id = :id
 		SQL
 		
 		# update
@@ -1629,7 +1629,7 @@ class Utilibase::Record
 			sql,
 			'links'=>links,
 			'jhash'=>JSON.generate(struct),
-			'uuid'=>self.uuid,
+			'id'=>self.id,
 		)
 	end
 	
@@ -1639,8 +1639,8 @@ class Utilibase::Record
 		
 		# if already in db
 		if self.in_db()
-			sql = 'select jhash from current where record_uuid=:uuid'
-			jhash = self.dbh.get_first_row(sql, 'uuid'=>self.uuid)
+			sql = 'select jhash from current where record_id=:id'
+			jhash = self.dbh.get_first_row(sql, 'id'=>self.id)
 			jhash = jhash[0]
 			jhash = JSON.parse(jhash)
 			return jhash
@@ -1659,8 +1659,8 @@ class Utilibase::Record
 		end
 		
 		# build sql
-		sql = 'select jhash from current where record_uuid=:uuid'
-		jhash = self.dbh.get_first_row(sql, 'uuid'=>self.uuid)
+		sql = 'select jhash from current where record_id=:id'
+		jhash = self.dbh.get_first_row(sql, 'id'=>self.id)
 		jhash = jhash[0]
 		
 		# should have gotten a jhash
@@ -1701,36 +1701,36 @@ class Utilibase::Record
 		sql = <<~SQL
 		insert into
 			history(
-				version_uuid,
-				record_uuid,
+				version_id,
+				record_id,
 				jhash,
 				links
 			)
 			
 			select
-				:version_uuid,
-				record_uuid,
+				:version_id,
+				record_id,
 				jhash,
 				links
 			from
 				current
 			where
-				record_uuid = :record_uuid and
+				record_id = :record_id and
 				update_stat is null;
 		SQL
 		
 		# run insert state
-		self.dbh.execute(sql, 'version_uuid'=>SecureRandom.uuid(), 'record_uuid'=>self.uuid)
+		self.dbh.execute(sql, 'version_id'=>SecureRandom.uuid(), 'record_id'=>self.id)
 		
 		# delete record from current
-		sql = 'delete from current where record_uuid=:uuid'
-		self.dbh.execute(sql, 'uuid'=>self.uuid)
+		sql = 'delete from current where record_id=:id'
+		self.dbh.execute(sql, 'id'=>self.id)
 	end
 	
 	# row
 	def row()
 		# Testmin.hr(__method__.to_s)
-		return self.db.row(self.uuid)
+		return self.db.row(self.id)
 	end
 end
 #

@@ -120,15 +120,15 @@ if true
 		# sql
 		sql = <<~SQL
 		insert into
-			history( version_uuid,  record_uuid,  jhash, links, ts_start,  ts_end  )
-			values ( :version_uuid, :record_uuid, '{}',  '',    :ts_start, :ts_end )
+			history( version_id,  record_id,  jhash, links, ts_start,  ts_end  )
+			values ( :version_id, :record_id, '{}',  '',    :ts_start, :ts_end )
 		SQL
 		
 		# run
 		dbh.execute_batch(
 			sql,
-			'version_uuid'=>SecureRandom.uuid(),
-			'record_uuid'=>SecureRandom.uuid(),
+			'version_id'=>SecureRandom.uuid(),
+			'record_id'=>SecureRandom.uuid(),
 			'ts_start'=>'xxx',
 			'ts_end'=>'2017-03-24T04:04:18+18.098Z'
 		)
@@ -140,7 +140,7 @@ if true
 		# puts e.message
 		# puts '------------------------------'
 		
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: history')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: history')
 	end
 end
 #
@@ -159,15 +159,15 @@ if true
 		# sql
 		sql = <<~SQL
 		insert into
-			history( version_uuid,  record_uuid,  jhash, links, ts_start,  ts_end  )
-			values ( :version_uuid, :record_uuid, '{}',  '',    :ts_start, :ts_end )
+			history( version_id,  record_id,  jhash, links, ts_start,  ts_end  )
+			values ( :version_id, :record_id, '{}',  '',    :ts_start, :ts_end )
 		SQL
 		
 		# run
 		dbh.execute_batch(
 			sql,
-			'version_uuid'=>SecureRandom.uuid(),
-			'record_uuid'=>SecureRandom.uuid(),
+			'version_id'=>SecureRandom.uuid(),
+			'record_id'=>SecureRandom.uuid(),
 			'ts_start'=>'2017-03-24T04:04:18+18.098Z',
 			'ts_end'=>'xxx'
 		)
@@ -179,7 +179,7 @@ if true
 		# puts e.message
 		# puts '------------------------------'
 		
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: history')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: history')
 	end
 end
 #

@@ -48,25 +48,25 @@ end
 
 
 #------------------------------------------------------------------------------
-# uuid format
+# id format
 #
 if true
-	Testmin.hr 'uuid format'
+	Testmin.hr 'id format'
 	
 	# check
 	begin
-		sql = "insert into current(record_id, jhash, links) values(:uuid, '{}', '')"
+		sql = "insert into current(record_id, jhash, links) values(:id, '{}', '')"
 		
-		# NOTE: The supposed uuid in this statement isn't valid. Note the + in it.
-		dbh.execute_batch(sql, 'uuid'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f')
+		# NOTE: The supposed id in this statement isn't valid. Note the + in it.
+		dbh.execute_batch(sql, 'id'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f')
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: current')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: current')
 	end
 end
 #
-# uuid format
+# id format
 #------------------------------------------------------------------------------
 
 

@@ -7,7 +7,7 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # purpose: test the links field
-# record_uuid
+# record_id
 #	d required
 #	d not primary key
 #	d not null

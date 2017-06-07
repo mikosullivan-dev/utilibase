@@ -13,7 +13,7 @@ $SAFE = 1
 #	merge array
 
 
-# uuids
+# ids
 fruit = SecureRandom.uuid()
 
 
@@ -24,14 +24,14 @@ if true
 	puts 'addition of element'
 	
 	# original structure
-	org = {'$uuid'=>fruit, 'a'=>1}
-	input = {'$uuid'=>fruit, 'b'=>2}
+	org = {'$id'=>fruit, 'a'=>1}
+	input = {'$id'=>fruit, 'b'=>2}
 	
 	# merge
 	merged = Utilibase::Utils.merge_jhashes(org, input)
 	
 	# should
-	should = {'$uuid'=>fruit, 'a'=>1, 'b'=>2}
+	should = {'$id'=>fruit, 'a'=>1, 'b'=>2}
 	
 	# check
 	UtilibaseTesting.comp_hash('addition of element', merged, should)
@@ -48,14 +48,14 @@ if true
 	puts 'deletion of single element'
 	
 	# original structure
-	org = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
-	input = {'$uuid'=>fruit, '$hash'=>{'delete'=>'a'}}
+	org = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	input = {'$id'=>fruit, '$hash'=>{'delete'=>'a'}}
 	
 	# merge
 	merged = Utilibase::Utils.merge_jhashes(org, input)
 	
 	# should
-	should = {'$uuid'=>fruit, 'b'=>2, 'c'=>3, 'd'=>4}
+	should = {'$id'=>fruit, 'b'=>2, 'c'=>3, 'd'=>4}
 	
 	# check
 	UtilibaseTesting.comp_hash('deletion of single element', merged, should)
@@ -72,14 +72,14 @@ if true
 	puts 'deletion of multiple elements'
 	
 	# original structure
-	org = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
-	input = {'$uuid'=>fruit, '$hash'=>{'delete'=>['a', 'b']}}
+	org = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	input = {'$id'=>fruit, '$hash'=>{'delete'=>['a', 'b']}}
 	
 	# merge
 	merged = Utilibase::Utils.merge_jhashes(org, input)
 	
 	# should
-	should = {'$uuid'=>fruit, 'c'=>3, 'd'=>4}
+	should = {'$id'=>fruit, 'c'=>3, 'd'=>4}
 	
 	# check
 	UtilibaseTesting.comp_hash('deletion of multiple elements', merged, should)

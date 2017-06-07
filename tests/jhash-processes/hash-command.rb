@@ -13,7 +13,7 @@ $SAFE = 1
 #	merge array
 
 
-# uuids
+# ids
 fruit = SecureRandom.uuid()
 
 
@@ -24,14 +24,14 @@ if true
 	puts 'deletion of element'
 	
 	# original structure
-	rv = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3}
+	rv = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3}
 	command = {'delete'=>'a'}
 	
 	# delete
 	Utilibase::Utils.hash_command(rv, command)
 	
 	# should
-	should = {'$uuid'=>fruit, 'b'=>2, 'c'=>3}
+	should = {'$id'=>fruit, 'b'=>2, 'c'=>3}
 	
 	# check
 	UtilibaseTesting.comp_hash('deletion of single element', rv, should)
@@ -48,14 +48,14 @@ if true
 	puts 'deletion of array of elements'
 	
 	# original structure
-	rv = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	rv = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
 	command = {'delete'=>['a', 'd']}
 	
 	# delete
 	Utilibase::Utils.hash_command(rv, command)
 	
 	# should
-	should = {'$uuid'=>fruit, 'b'=>2, 'c'=>3}
+	should = {'$id'=>fruit, 'b'=>2, 'c'=>3}
 	
 	# check
 	UtilibaseTesting.comp_hash('deletion of arrays of elements', rv, should)
@@ -72,14 +72,14 @@ if true
 	puts 'nil as key'
 	
 	# original structure
-	rv = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	rv = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
 	command = {'delete'=>['a', nil]}
 	
 	# delete
 	Utilibase::Utils.hash_command(rv, command)
 	
 	# should
-	should = {'$uuid'=>fruit, 'b'=>2, 'c'=>3, 'd'=>4}
+	should = {'$id'=>fruit, 'b'=>2, 'c'=>3, 'd'=>4}
 	
 	# check
 	UtilibaseTesting.comp_hash('nil as key', rv, should)
@@ -96,14 +96,14 @@ if true
 	puts 'no hash command'
 	
 	# original structure
-	rv = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	rv = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
 	command = nil
 	
 	# delete
 	Utilibase::Utils.hash_command(rv, command)
 	
 	# should
-	should = {'$uuid'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
+	should = {'$id'=>fruit, 'a'=>1, 'b'=>2, 'c'=>3, 'd'=>4}
 	
 	# check
 	UtilibaseTesting.comp_hash('no hash command', rv, should)

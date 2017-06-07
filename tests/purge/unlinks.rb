@@ -20,9 +20,9 @@ new_links = [ SecureRandom.uuid(), SecureRandom.uuid(), SecureRandom.uuid()]
 # jhash
 jhash =
 	'{' +
-	'"$uuid":"6b3e967d-b736-4151-a64d-72cbaa77c047", ' +
+	'"$id":"6b3e967d-b736-4151-a64d-72cbaa77c047", ' +
 	'"phones":[' +
-		'{"$uuid":"' + (keep_links + new_links).join('"}, {"$uuid":"') + '"}' +
+		'{"$id":"' + (keep_links + new_links).join('"}, {"$id":"') + '"}' +
 		']' +
 	'}'
 

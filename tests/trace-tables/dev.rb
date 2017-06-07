@@ -6,9 +6,9 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # purpose: test the table trace_records
-#	trace_uuid references record in traces
-#	record_uuid references record in current
-#	trace_uuid and record_uuid are unique
+#	trace_id references record in traces
+#	record_id references record in current
+#	trace_id and record_id are unique
 
 # reset directory
 UtilibaseTesting.reset_db_dir()
@@ -29,8 +29,8 @@ UtilibaseTesting.check_foreign_key(
 	dbh,            # dbh
 	table_name,     # source table
 	'current',      # target table
-	'record_uuid',  # source field
-	'record_uuid',  # target field
+	'record_id',  # source field
+	'record_id',  # target field
 	'CASCADE'       # on delete
 )
 

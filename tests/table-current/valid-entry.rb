@@ -21,8 +21,8 @@ puts UtilibaseTesting.db_path(db_file)
 
 
 # check
-sql = "insert into current(record_uuid, jhash, links) values(:uuid, '{}', '')"
-dbh.execute_batch(sql, {'uuid'=>SecureRandom.uuid()})
+sql = "insert into current(record_id, jhash, links) values(:id, '{}', '')"
+dbh.execute_batch(sql, {'id'=>SecureRandom.uuid()})
 
 
 # done

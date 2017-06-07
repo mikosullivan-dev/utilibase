@@ -9,4 +9,4 @@ $SAFE = 1
 old_hash = {'a'=>'old', 'b'=>'this is b'}
 new_hash = {'a'=>'new'}
 
-puts old_hash.merge(new_hash)
+puts old_hash.id

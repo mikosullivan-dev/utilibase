@@ -74,8 +74,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, unlinked) values(:uuid, '{}', '', 'x')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, unlinked) values(:id, '{}', '', 'x')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('must be i or r', e, 'CHECK constraint failed: current')
@@ -94,8 +94,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, dependency, unlinked) values(:uuid, '{}', '', 'i', 'i')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, dependency, unlinked) values(:id, '{}', '', 'i', 'i')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('must be i or r', e, 'CHECK constraint failed: dependency_and_unlinked')
@@ -114,8 +114,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, dependency, unlinked) values(:uuid, '{}', '', 'm', 'i')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, dependency, unlinked) values(:id, '{}', '', 'm', 'i')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('must be i or r', e, 'CHECK constraint failed: dependency_and_unlinked')

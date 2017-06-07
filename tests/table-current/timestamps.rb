@@ -97,8 +97,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, ts_start) values(:uuid, '{}', '', 'xxx')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, ts_start) values(:id, '{}', '', 'xxx')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message
@@ -119,12 +119,12 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, ts_end) values(:uuid, '{}', '', '2017-03-24T04:04:18+18.098Z')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, ts_end) values(:id, '{}', '', '2017-03-24T04:04:18+18.098Z')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		# puts e.message
-		UtilibaseTesting.exception_message('valid uuid', e, 'CHECK constraint failed: current')
+		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: current')
 	end
 end
 #

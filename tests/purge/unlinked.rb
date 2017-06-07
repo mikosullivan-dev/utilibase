@@ -18,7 +18,7 @@ dbh = db.dbh
 xyz = XYZ.new(dbh)
 
 # remove records from Mary's phones
-mary = db.record(xyz.uuid('mary'))
+mary = db.record(xyz.id('mary'))
 mary.update({'phones':[]})
 
 # get mary row
@@ -47,11 +47,11 @@ SQL
 got = dbh.select_column(sql)
 
 # sql for finding record in links_current
-sql = 'select * from links_current where tgt_uuid=:uuid'
+sql = 'select * from links_current where tgt_id=:id'
 
 # check that the unlinked records are no longer in links_current
 shoulds.each { |id|
-	row = dbh.get_first_row(sql, 'uuid'=>xyz.uuid(id))
+	row = dbh.get_first_row(sql, 'id'=>xyz.id(id))
 	UtilibaseTesting.is_nil('links_current: ' + id, row)
 }
 

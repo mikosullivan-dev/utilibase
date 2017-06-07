@@ -21,20 +21,20 @@ rcrd = Utilibase::Record.new(db, SecureRandom.uuid())
 rcrd.save_new()
 
 # set record to not updated
-sql = 'update current set update_stat=null where record_uuid=:uuid'
-db.dbh.execute(sql, 'uuid'=>rcrd.uuid)
+sql = 'update current set update_stat=null where record_id=:id'
+db.dbh.execute(sql, 'id'=>rcrd.id)
 
 # get record object again
-rcrd = Utilibase::Record.new(db, rcrd.uuid)
+rcrd = Utilibase::Record.new(db, rcrd.id)
 
 # delete record
 rcrd.delete()
 
 # record should not be in current
-UtilibaseTesting.record_in_current('record should not be in current', db, rcrd.uuid, {'should'=>false})
+UtilibaseTesting.record_in_current('record should not be in current', db, rcrd.id, {'should'=>false})
 
 # record should be in history
-UtilibaseTesting.record_in_history('record should be in history once', db, rcrd.uuid, 1)
+UtilibaseTesting.record_in_history('record should be in history once', db, rcrd.id, 1)
 
 # done
 # puts '[done]'

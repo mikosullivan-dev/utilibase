@@ -19,17 +19,17 @@ dbh = db.dbh
 xyz = XYZ.new(dbh)
 
 # remove records from Mary's phones
-mary = db.record(xyz.uuid('mary'))
+mary = db.record(xyz.id('mary'))
 mary.update({'phones':[]})
 
 # set_unlinked
 db.set_unlinked()
 
 # trace redstone
-db.trace_record xyz.uuid('redstone')
+db.trace_record xyz.id('redstone')
 
 # redstone should still be in current
-UtilibaseTesting.bool 'should not be in current anymore', xyz.uuid('redstone'), true
+UtilibaseTesting.bool 'should not be in current anymore', xyz.id('redstone'), true
 
 # done
 # puts '[done]'

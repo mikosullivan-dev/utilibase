@@ -6,9 +6,9 @@ require_relative '../testing.lib.rb'
 $SAFE = 1
 
 # purpose: test the table trace_records
-#	trace_uuid references record in traces
-#	record_uuid references record in current
-#	trace_uuid and record_uuid are primary key
+#	trace_id references record in traces
+#	record_id references record in current
+#	trace_id and record_id are primary key
 
 # reset directory
 UtilibaseTesting.reset_db_dir()
@@ -26,16 +26,16 @@ table_name = 'trace_records'
 
 
 #------------------------------------------------------------------------------
-# structure: trace_uuid
+# structure: trace_id
 #
 if true
-	Testmin.hr 'structure: trace_uuid'
+	Testmin.hr 'structure: trace_id'
 	
 	# field structure
 	UtilibaseTesting.field_structure(
 		dbh,             # dbh
 		table_name,      # table name
-		'trace_uuid',    # field name
+		'trace_id',    # field name
 		1,               # pk
 		'text',          # type
 		1,               # 1 if not null, 0 if nullable
@@ -43,48 +43,48 @@ if true
 	)
 end
 #
-# structure: trace_uuid
+# structure: trace_id
 #------------------------------------------------------------------------------
 
 
 #------------------------------------------------------------------------------
-# structure: record_uuid
+# structure: record_id
 #
 if true
-	Testmin.hr 'structure: record_uuid'
+	Testmin.hr 'structure: record_id'
 	
 	# field_structure(dbh, table_name, field_name, pk, type, notnull, default)
 	UtilibaseTesting.field_structure(
 		dbh,             # dbh
 		table_name,      # table name
-		'record_uuid',   # field name
+		'record_id',   # field name
 		2,               # pk
 		'text',          # type
 		1,               # 1 if not null, 0 if nullable
 		nil)             # default
 	
-	# foreign key: record_uuid
+	# foreign key: record_id
 	UtilibaseTesting.check_foreign_key(
 		dbh,            # dbh
 		table_name,     # source table
 		'current',      # target table
-		'record_uuid',  # source field
-		'record_uuid',  # target field
+		'record_id',  # source field
+		'record_id',  # target field
 		'CASCADE'       # on delete
 	)
 	
-	# foreign key: trace_uuid
+	# foreign key: trace_id
 	UtilibaseTesting.check_foreign_key(
 		dbh,           # dbh
 		table_name,    # source table
 		'traces',      # target table
-		'trace_uuid',  # source field
-		'trace_uuid',  # target field
+		'trace_id',  # source field
+		'trace_id',  # target field
 		'CASCADE'      # on delete
 	)
 end
 #
-# structure: record_uuid
+# structure: record_id
 #------------------------------------------------------------------------------
 
 

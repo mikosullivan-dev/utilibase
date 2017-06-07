@@ -67,23 +67,23 @@ end
 
 
 #------------------------------------------------------------------------------
-# index: current_record_uuid_update_stat
+# index: current_record_id_update_stat
 #
 if true
-	Testmin.hr('current_record_uuid_update_stat')
+	Testmin.hr('current_record_id_update_stat')
 	
 	# check
 	UtilibaseTesting.check_index(
 		dbh,                                # dbh
 		table_name,                         # table_name
-		'current_record_uuid_update_stat',  # index name
+		'current_record_id_update_stat',  # index name
 		0,                                  # 1 for unique, 0 for non-unique
 		0,                                  # partial
-		['record_uuid', 'update_stat']      # columns in index
+		['record_id', 'update_stat']      # columns in index
 	)
 end
 #
-# index: current_record_uuid_update_stat
+# index: current_record_id_update_stat
 #------------------------------------------------------------------------------
 
 
@@ -95,8 +95,8 @@ if true
 	
 	# check
 	begin
-		sql = "insert into current(record_uuid, jhash, links, update_stat) values(:uuid, '{}', '', 'c')"
-		dbh.execute_batch(sql, 'uuid'=>SecureRandom.uuid())
+		sql = "insert into current(record_id, jhash, links, update_stat) values(:id, '{}', '', 'c')"
+		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
 	rescue Exception => e
 		UtilibaseTesting.exception_message('must be nil, n, or u', e, 'CHECK constraint failed: current')

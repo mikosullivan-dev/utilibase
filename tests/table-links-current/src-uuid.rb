@@ -5,7 +5,7 @@ require_relative '../testing.lib.rb'
 # enable taint mode
 $SAFE = 1
 
-# purpose: test src_uuid
+# purpose: test src_id
 #	references record in current
 
 # reset directory
@@ -29,7 +29,7 @@ if true
 	UtilibaseTesting.field_structure(
 		dbh,           # dbh
 		table_name,    # table name
-		'src_uuid',    # field name
+		'src_id',    # field name
 		1,             # pk
 		'text',        # type
 		1,             # 1 if not null, 0 if nullable
@@ -50,8 +50,8 @@ if true
 		dbh,
 		table_name,
 		'current',
-		'src_uuid',
-		'record_uuid',
+		'src_id',
+		'record_id',
 		'CASCADE'
 	)
 end

@@ -7,7 +7,7 @@ $SAFE = 1
 
 # purpose: test the XYZ class, which represents a test data structure
 #	instantiate object
-#	xyz.uuid()
+#	xyz.id()
 #	xyz.exists()
 
 # reset directory

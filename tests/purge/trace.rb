@@ -36,7 +36,7 @@ if true
 	dbh.execute(sql, 'id'=>'mary-home-phone-properties')
 	
 	# run trace
-	db.trace_record(xyz.uuid('mary-home-phone-properties'))
+	db.trace_record(xyz.id('mary-home-phone-properties'))
 	
 	# following records should still be in the database
 	in_current = {
@@ -71,7 +71,7 @@ if true
 	Testmin.hr('title'=>'trace nobodys-cell-phone-properties', 'dash'=>'=')
 	
 	# run trace
-	db.trace_record(xyz.uuid('nobodys-cell-phone-properties'))
+	db.trace_record(xyz.id('nobodys-cell-phone-properties'))
 	
 	# following records should still be in the database
 	in_current = [

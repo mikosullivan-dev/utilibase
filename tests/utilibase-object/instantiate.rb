@@ -23,8 +23,8 @@ db_path = UtilibaseTesting.db_path(db_file)
 db = Utilibase.new(db_path)
 
 # instantiate record object
-rcrd_uuid = SecureRandom.uuid()
-rcrd = Utilibase::Record.new(db, rcrd_uuid)
+rcrd_id = SecureRandom.uuid()
+rcrd = Utilibase::Record.new(db, rcrd_id)
 UtilibaseTesting.isa('is a', rcrd, Utilibase::Record)
 
 # done

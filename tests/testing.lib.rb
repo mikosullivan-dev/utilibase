@@ -371,13 +371,13 @@ module UtilibaseTesting
 	end
 	
 	# record_in_current
-	def UtilibaseTesting.record_in_current(test_name, db, record_uuid, opts={})
+	def UtilibaseTesting.record_in_current(test_name, db, record_id, opts={})
 		# puts 'record_in_current'
 		opts = {'should'=>true}.merge(opts)
 		
 		# get count of record
-		sql = 'select count(*) as rcount from current where record_uuid=:uuid'
-		row = db.dbh.get_first_row(sql, 'uuid'=>record_uuid)
+		sql = 'select count(*) as rcount from current where record_id=:id'
+		row = db.dbh.get_first_row(sql, 'id'=>record_id)
 		
 		# if should
 		if opts['should']
@@ -392,12 +392,12 @@ module UtilibaseTesting
 	end
 	
 	# record_in_history
-	def UtilibaseTesting.record_in_history(test_name, db, record_uuid, should_count)
+	def UtilibaseTesting.record_in_history(test_name, db, record_id, should_count)
 		puts 'record_in_history'
 		
 		# get count of record
-		sql = 'select count(*) as rcount from history where record_uuid=:uuid'
-		row = db.dbh.get_first_row(sql, 'uuid'=>record_uuid)
+		sql = 'select count(*) as rcount from history where record_id=:id'
+		row = db.dbh.get_first_row(sql, 'id'=>record_id)
 		
 		# check count
 		if row['rcount'] != should_count
@@ -512,8 +512,8 @@ class XYZ
 		# sql
 		sql = <<~SQL
 		insert into
-			current(record_uuid, jhash, links, dependency, notes)
-			values(:record_uuid, :jhash, :links, :dependency, :notes)
+			current(record_id, jhash, links, dependency, notes)
+			values(:record_id, :jhash, :links, :dependency, :notes)
 		SQL
 		
 		# statement handle
@@ -523,8 +523,8 @@ class XYZ
 		sql = <<~SQL
 		insert into
 			links_current (
-				src_uuid,
-				tgt_uuid,
+				src_id,
+				tgt_id,
 				src_is_independent
 			)
 			values (
@@ -539,8 +539,8 @@ class XYZ
 		
 		# add records to current
 		all.each do |el|
-			# record uuid
-			record_uuid = el['$uuid']
+			# record id
+			record_id = el['$id']
 			
 			# get dependency
 			dependency = el['$class']
@@ -563,7 +563,7 @@ class XYZ
 			# check
 			begin
 				current_ins_sth.execute(
-					'record_uuid'=>record_uuid,
+					'record_id'=>record_id,
 					'jhash'=>jhash,
 					'links' => links.join(' '),
 					'dependency' => dependency,
@@ -577,8 +577,8 @@ class XYZ
 		
 		# add records to links_current
 		all.each do |el|
-			# record uuid
-			record_uuid = el['$uuid']
+			# record id
+			record_id = el['$id']
 			
 			# get dependency
 			dependency = el['$class']
@@ -599,12 +599,12 @@ class XYZ
 				src_is_independent = (dependency == 'i' ? 1 : 0)
 				
 				# TESTING
-				# puts 'link_tgt: ' + link_tgt + ' | link_src: ' + record_uuid
+				# puts 'link_tgt: ' + link_tgt + ' | link_src: ' + record_id
 				
 				# add record
 				begin
 					links_current_ins_sth.execute(
-						'src'=>record_uuid,
+						'src'=>record_id,
 						'tgt'=>link_tgt,
 						'src_is_independent' => src_is_independent,
 					)
@@ -619,13 +619,13 @@ class XYZ
 		sql = <<~SQL
 		delete
 			from   current
-			where  record_uuid=:uuid
+			where  record_id=:id
 		SQL
 		
 		# delete records marked for deletion
 		all.each do |el|
 			if el['delete']
-				dbh.execute(sql, 'uuid'=>el['$uuid'])
+				dbh.execute(sql, 'id'=>el['$id'])
 			end
 		end
 		
@@ -649,9 +649,9 @@ class XYZ
 		return record
 	end
 	
-	# uuid
-	def uuid(id)
-		return self.record(id)['$uuid']
+	# id
+	def id(id)
+		return self.record(id)['$id']
 	end
 	
 	# id_in_current
@@ -663,8 +663,8 @@ class XYZ
 		record = self.record(id)
 		
 		# get row
-		sql = 'select count(*) as count from current where record_uuid=:uuid'
-		row = dbh.get_first_row(sql, 'uuid'=>record['$uuid'])
+		sql = 'select count(*) as count from current where record_id=:id'
+		row = dbh.get_first_row(sql, 'id'=>record['$id'])
 		
 		# return
 		return row['count'] > 0 ? true : false
@@ -687,8 +687,8 @@ class XYZ
 		end
 		
 		# get row
-		sql = 'select * from current where record_uuid=:uuid'
-		row = dbh.get_first_row(sql, 'uuid'=>record['$uuid'])
+		sql = 'select * from current where record_id=:id'
+		row = dbh.get_first_row(sql, 'id'=>record['$id'])
 		
 		# if row is defined, parse some of the fields
 		if not row.nil?
@@ -708,13 +708,13 @@ class XYZ
 		# UtilibaseTesting.hr('in_links_current: ' + src + ' -> ' + tgt)
 		
 		# sql
-		sql = 'select * from links_current where src_uuid=:src and tgt_uuid=:tgt'
+		sql = 'select * from links_current where src_id=:src and tgt_id=:tgt'
 		
 		# get row
 		row = dbh.get_first_row(
 			sql,
-			'src'=>ids[src]['$uuid'],
-			'tgt'=>ids[tgt]['$uuid'],
+			'src'=>ids[src]['$id'],
+			'tgt'=>ids[tgt]['$id'],
 		)
 		
 		# false if we didn't get the record

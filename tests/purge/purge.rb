@@ -33,7 +33,7 @@ purged_not = [
 ]
 
 # remove records from Mary's phones
-mary = db.record(xyz.uuid('mary'))
+mary = db.record(xyz.id('mary'))
 mary.update({'phones':[]})
 
 # purge
