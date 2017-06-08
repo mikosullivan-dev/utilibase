@@ -5,7 +5,7 @@
 		"jhash.rb",
 		"timestamps.rb",
 		"links.rb",
-		"version-uuid.rb",
+		"version-id.rb",
 		"record-id.rb",
 		"update-stat.rb"
 	]

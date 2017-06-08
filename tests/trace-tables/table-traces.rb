@@ -50,42 +50,6 @@ end
 
 
 #------------------------------------------------------------------------------
-# trace_id: id format
-#
-if true
-	Testmin.hr 'trace_id: id format'
-	
-	# check
-	begin
-		# sql
-		sql = <<~SQL
-		insert into
-			traces( trace_id  )
-			values ( :id )
-		SQL
-		
-		# run
-		dbh.execute_batch(
-			sql,
-			'id'=>'xxx'
-		)
-		
-		# should not get to this point
-		raise 'should have gotten exception'
-	rescue Exception => e
-		# puts '------------------------------'
-		# puts e.message
-		# puts '------------------------------'
-		
-		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: traces')
-	end
-end
-#
-# trace_id: id format
-#------------------------------------------------------------------------------
-
-
-#------------------------------------------------------------------------------
 # init_time: trace_id
 #
 if true

@@ -49,44 +49,6 @@ end
 #------------------------------------------------------------------------------
 
 
-#------------------------------------------------------------------------------
-# valid id
-#
-if true
-	puts 'valid id'
-	
-	# check
-	begin
-		# sql
-		sql = <<~SQL
-		insert into
-			history( version_id,  record_id,  jhash, links, ts_start,  ts_end  )
-			values ( :version_id, :record_id, '{}',  '',    :ts_start, :ts_end )
-		SQL
-		
-		# run
-		# NOTE: The supposed id in this statement isn't valid. Note the + in it.
-		dbh.execute_batch(
-			sql,
-			'version_id'=>'7a00ffe9-70cb-4d73-8a83+d2394f493a1f',
-			'record_id'=>SecureRandom.uuid(),
-			'ts_start'=>'2017-03-23T04:04:18+18.098Z',
-			'ts_end'=>'2017-03-24T04:04:18+18.098Z',
-		)
-		
-		# should not get to this point
-		raise 'should have gotten exception'
-	rescue Exception => e
-		# puts '----------------------------------'
-		# puts e.message
-		# puts '----------------------------------'
-		
-		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: history')
-	end
-end
-#
-# valid id
-#------------------------------------------------------------------------------
 
 
 

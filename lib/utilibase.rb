@@ -183,8 +183,7 @@ class Utilibase
 			-- ts_start
 			-- Beginning time range for when this record is active.
 			ts_start
-			text
-			check( ts_start like '____-__-__T__:__:__+__.___Z' ),
+			text,
 			
 			-- ts_end
 			-- Ending time range for when this record is active.
@@ -237,8 +236,7 @@ class Utilibase
 			version_id
 			text
 			primary key
-			not null
-			check( version_id like '________-____-____-____-____________' ),
+			not null,
 			
 			-- record_id
 			record_id
@@ -264,8 +262,7 @@ class Utilibase
 			
 			-- ts_start
 			ts_start
-			text
-			check( ts_start like '____-__-__T__:__:__+__.___Z' ),
+			text,
 			
 			-- ts_end
 			-- KLUDGE: To make it easier to union ts_end with the history
@@ -273,8 +270,7 @@ class Utilibase
 			-- null. It seems silly to have a field that's always nbull, but
 			-- for now we'll go with the simple solution.
 			ts_end
-			text
-			check( ts_end like '____-__-__T__:__:__+__.___Z' ),
+			text,
 			
 			-- notes
 			-- This field is just for debugging and has no use in production
@@ -325,8 +321,7 @@ class Utilibase
 			trace_id
 			text
 			primary key
-			not null
-			check( trace_id like '________-____-____-____-____________' ),
+			not null,
 			
 			-- time of trace
 			init_time

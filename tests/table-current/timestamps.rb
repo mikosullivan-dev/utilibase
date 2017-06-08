@@ -90,28 +90,6 @@ end
 
 
 #------------------------------------------------------------------------------
-# ts_start: format
-#
-if true
-	Testmin.hr 'ts_start: format'
-	
-	# check
-	begin
-		sql = "insert into current(record_id, jhash, links, ts_start) values(:id, '{}', '', 'xxx')"
-		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
-		raise 'should have gotten exception'
-	rescue Exception => e
-		# puts e.message
-		UtilibaseTesting.exception_message('ts_start format', e, 'CHECK constraint failed: current')
-	end
-end
-#
-# ts_start: format
-#------------------------------------------------------------------------------
-
-
-
-#------------------------------------------------------------------------------
 # ts_end: must be null
 #
 if true
