@@ -1,6 +1,6 @@
 {
 	"dir-order" : 400,
-	"files" : [
-		"all.rb"
-	]
+	"files" : {
+		"all.rb":true
+	}
 }

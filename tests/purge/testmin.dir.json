@@ -1,11 +1,11 @@
 {
 	"dir-order" : 1500,
-	"files" : [
-		"trace.rb",
-		"trace.mary-home-phone.rb",
-		"trace.redstone.rb",
-		"unlinks.rb",
-		"unlinked.rb",
-		"purge.rb"
-	]
+	"files" : {
+		"trace.rb":true,
+		"trace.mary-home-phone.rb":true,
+		"trace.redstone.rb":true,
+		"unlinks.rb":true,
+		"unlinked.rb":true,
+		"purge.rb":true
+	}
 }

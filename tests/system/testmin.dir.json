@@ -1,6 +1,6 @@
 {
 	"dir-order" : 100,
-	"files" : [
-		"resources.rb"
-	]
+	"files" : {
+		"resources.rb":true
+	}
 }

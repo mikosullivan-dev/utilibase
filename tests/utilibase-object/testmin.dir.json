@@ -1,8 +1,8 @@
 {
 	"dir-order" : 1200,
-	"files" : [
-		"reset-db-dir.rb",
-		"instantiate.rb",
-		"dbh.rb"
-	]
+	"files" : {
+		"reset-db-dir.rb":true,
+		"instantiate.rb":true,
+		"dbh.rb":true
+	}
 }

@@ -1,12 +1,12 @@
 {
 	"dir-order" : 1100,
-	"files" : [
-		"reset-db-dir.rb",
-		"jhash.rb",
-		"timestamps.rb",
-		"links.rb",
-		"version-id.rb",
-		"record-id.rb",
-		"update-stat.rb"
-	]
+	"files" : {
+		"reset-db-dir.rb":true,
+		"jhash.rb":true,
+		"timestamps.rb":true,
+		"links.rb":true,
+		"version-id.rb":true,
+		"record-id.rb":true,
+		"update-stat.rb":true
+	}
 }

@@ -1,6 +1,6 @@
 {
 	"dir-order" : 200,
-	"files" : [
-		"reset-db-dir.rb"
-	]
+	"files" : {
+		"reset-db-dir.rb":true
+	}
 }

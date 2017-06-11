@@ -1,9 +1,9 @@
 {
 	"dir-order" : 500,
-	"files" : [
-		"non-existent-path.rb",
-		"tainted-path.rb",
-		"create.rb",
-		"tainted-sql.rb"
-	]
+	"files" : {
+		"non-existent-path.rb":true,
+		"tainted-path.rb":true,
+		"create.rb":true,
+		"tainted-sql.rb":true
+	}
 }

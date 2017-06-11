@@ -1,8 +1,8 @@
 {
 	"dir-order" : 1000,
-	"files" : [
-		"reset-db-dir.rb",
-		"table-traces.rb",
-		"table-trace-records.rb"
-	]
+	"files" : {
+		"reset-db-dir.rb":true,
+		"table-traces.rb":true,
+		"table-trace-records.rb":true
+	}
 }

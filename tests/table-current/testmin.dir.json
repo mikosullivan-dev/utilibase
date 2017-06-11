@@ -1,14 +1,14 @@
 {
 	"dir-order" : 800,
-	"files" : [
-		"reset-db-dir.rb",
-		"record-id.rb",
-		"jhash.rb",
-		"update-stat.rb",
-		"links.rb",
-		"timestamps.rb",
-		"valid-entry.rb",
-		"dependency.rb",
-		"unlinked.rb"
-	]
+	"files" : {
+		"reset-db-dir.rb":true,
+		"record-id.rb":true,
+		"jhash.rb":true,
+		"update-stat.rb":true,
+		"links.rb":true,
+		"timestamps.rb":true,
+		"valid-entry.rb":true,
+		"dependency.rb":true,
+		"unlinked.rb":true
+	}
 }
