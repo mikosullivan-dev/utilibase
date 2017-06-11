@@ -841,7 +841,7 @@ module Testmin
 	# submit_ask
 	#
 	def Testmin.submit_ask()
-		Testmin.hr(__method__.to_s)
+		# Testmin.hr(__method__.to_s)
 		
 		# get submit settings
 		submit = Testmin.settings['submit']

@@ -1,8 +1,8 @@
 {
 	"submit" : {
 		"request":true,
-		"request-email" : true,
-		"request-comments" : true
+		"email" : true,
+		"comments" : true
 	},
 	"project-id" : "HCt7wg1f"
 }
