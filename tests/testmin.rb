@@ -4,6 +4,7 @@ require 'fileutils'
 require 'open3'
 require 'benchmark'
 require 'timeout'
+require 'time'
 require 'optparse'
 
 
@@ -92,8 +93,8 @@ module Testmin
 				'submit-success' => 'done',
 				'submit-failure' => 'Submission of test results failed. Errors: [[errors]]',
 				'add-comments' => 'Add your comments here.',
-				'entry-reference' => 'Test results can be viwed at [[entry-url]]',
-				'project-reference' => 'Project results can be viewed at [[project-url]]',
+				'entry-reference' => 'test results',
+				'project-reference' => 'project results',
 				
 				# request to submit results
 				'submit-request' => <<~TEXT,
@@ -629,11 +630,12 @@ module Testmin
 	def Testmin.create_log()
 		# initialize log object
 		log = {}
-		log['id'] = ('a'..'z').to_a.shuffle[0,20].join
+		log['id'] = ('a'..'z').to_a.shuffle[0,10].join
 		log['success'] = true
 		log['messages'] = []
 		log['dirs'] = {}
 		log['private'] = {}
+		log['timestamp'] = Time.new.to_s
 		
 		# get project id if there is one
 		if not Testmin.settings['project'].nil?
@@ -892,7 +894,7 @@ module Testmin
 		# get prompt
 		prompt = Testmin.message(
 			'submit-request',
-			'fields' => submit,
+			'fields' => submit['site'],
 		)
 		
 		# get results of user prompt
@@ -1051,6 +1053,40 @@ module Testmin
 	
 	
 	#---------------------------------------------------------------------------
+	# print_table
+	#
+	def Testmin.print_table(table)
+		# initialize widths array
+		widths = []
+		
+		# calculate maximum widths
+		table.each{|line|
+			c = 0
+			
+			# loop through columns
+			line.each{|col|
+				widths[c] = (widths[c] && widths[c] > col.length) ? widths[c] : col.length
+				c += 1
+			}
+		}
+		
+		# print each line
+		table.each do |line|
+			# print each column
+			line.each_with_index do |col, index|
+				print col.ljust(widths[index]) + '  '
+			end
+			
+			# add newline
+			print "\n"
+		end
+	end
+	#
+	# print_table
+	#---------------------------------------------------------------------------
+	
+
+	#---------------------------------------------------------------------------
 	# submit_results
 	# TODO: Need to generalize this routine for submitting to other test
 	# logging sites.
@@ -1140,6 +1176,9 @@ module Testmin
 		puts ' ' + Testmin.message('submit-success')
 		puts
 		
+		# initialize table
+		table = []
+		
 		# entry link url
 		entry_url =
 			site['root'] +
@@ -1148,7 +1187,10 @@ module Testmin
 			CGI.escape(results['id'])
 		
 		# entry link
-		puts Testmin.message('entry-reference', 'fields'=>{'entry-url'=>entry_url})
+		table.push([
+			Testmin.message('entry-reference') + ':',
+			entry_url
+		])
 		
 		# project link
 		if not results['project'].nil?
@@ -1160,8 +1202,14 @@ module Testmin
 				CGI.escape(results['project'])
 			
 			# entry link
-			puts Testmin.message('project-reference', 'fields'=>{'project-url'=>project_url})
+			table.push([
+				Testmin.message('project-reference') + ':',
+				project_url
+			])
 		end
+		
+		# output urls
+		Testmin.print_table(table)
 	end
 	#
 	# submit_success
