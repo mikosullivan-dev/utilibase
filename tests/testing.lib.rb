@@ -1,8 +1,7 @@
 # I like to clear the screen before each test
-if ENV['AUTOCLEAR']
-	if not ENV['CLEAR_DONE']
-		# system('/usr/bin/clear')
-	end
+if (ENV['AUTOCLEAR']) and (not ENV['CLEAR_DONE'])
+	system('/usr/bin/clear')
+	ENV['CLEAR_DONE'] = '1'
 end
 
 # load Testmin
