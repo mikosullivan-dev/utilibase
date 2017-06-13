@@ -8,12 +8,7 @@ require 'optparse'
 
 
 # Testmin is a simple, minimalist testing framework. Testmin is on GitHub at
-# https://github.com/mikosullivan/Testmin
-
-# note clear as done
-# NOTE: This setting is a leftover from an earlier version of Testmin. For now
-# just leave this line as it is. It won't get in the way of how Testmin works.
-ENV['clear_done'] = '1'
+# https://github.com/mikosullivan/testmin
 
 
 
@@ -24,6 +19,9 @@ module Testmin
 	
 	# Testmin version
 	VERSION = '0.0.3'
+	
+	# export Testmin version to environment
+	ENV['TESTMIN'] = VERSION
 	
 	# length for horizontal rules
 	HR_LENGTH = 100
@@ -39,8 +37,16 @@ module Testmin
 	# if devshortcut() has been called
 	@devshortcut_called = false
 	
+	# if Testmin should output directory hr's
+	@dir_hrs = true
+	
 	# settings
 	@settings = nil
+	
+	# exec_file
+	# The realpath to the current executing file
+	@exec_file = File.realpath(__FILE__)
+	
 	
 	#---------------------------------------------------------------------------
 	# DefaultSettings
@@ -72,6 +78,8 @@ module Testmin
 				'success' => 'success',
 				'failure' => 'failure',
 				'yn' => '[Yes|No]',
+				'root-dir' => 'root directory',
+				'running-tests' => 'Running tests',
 				
 				# messages about test results
 				'test-success' => 'All tests run successfully',
@@ -231,11 +239,21 @@ module Testmin
 	def Testmin.dir_check(log, dir)
 		# Testmin.hr(__method__.to_s)
 		
+		# convenience variables
+		files = dir['settings']['files']
+		
 		# array of files to add to files hash
 		add_files = []
 		
 		# change into test dir
 		Dir.chdir(dir['path']) do
+			# unlist files that don't exist
+			files.keys.each do |file_path|
+				if not File.exist?(file_path)
+					files.delete(file_path)
+				end
+			end
+			
 			# loop through files in directory
 			Dir.glob('*').each do |file_path|
 				# skip dev files
@@ -253,8 +271,13 @@ module Testmin
 					next
 				end
 				
+				# don't execute self
+				if File.realpath(file_path) == @exec_file
+					next
+				end
+				
 				# if file is not in files hash, add to array of unlisted files
-				if not dir['settings']['files'].key?(file_path)
+				if not files.key?(file_path)
 					add_files.push(file_path)
 				end
 			end
@@ -262,8 +285,9 @@ module Testmin
 		
 		# add files not listed in config file
 		add_files.each do |file_path|
-			dir['settings']['files'][file_path] = true
+			files[file_path] = true
 		end
+		
 		
 		# retutrn success
 		return true
@@ -278,9 +302,16 @@ module Testmin
 	#
 	def Testmin.dir_run(log, dir, dir_order)
 		# verbosify
-		dir_path_display = dir['path']
-		dir_path_display = dir_path_display.sub(/\A\.\//, '')
-		Testmin.hr('title'=>dir_path_display, 'dash'=>'=')
+		if @dir_hrs
+			if dir['title'].nil?
+				dir_path_display = dir['path']
+				dir_path_display = dir_path_display.sub(/\A\.\//, '')
+			else
+				dir_path_display = dir['title']
+			end
+			
+			Testmin.hr('title'=>dir_path_display, 'dash'=>'=')
+		end
 		
 		# initialize success to true
 		success = true
@@ -1197,6 +1228,16 @@ module Testmin
 		# initialize dirs array
 		run_dirs = []
 		
+		# start with current directory
+		if not Testmin.dir_settings(log, run_dirs, './')
+			return false
+		end
+		
+		# prettify dir settings for current directory
+		if run_dirs[0]['title'].nil?
+			run_dirs[0]['title'] = '[' + Testmin.message('root-dir') + ']'
+		end
+		
 		# get list of directories
 		Dir.glob('./*/').each do |dir_path|
 			if not Testmin.dir_settings(log, run_dirs, dir_path)
@@ -1214,11 +1255,19 @@ module Testmin
 			end
 		end
 		
+		# if only the root directory, don't bother outputting the HR for it
+		if run_dirs.length == 1
+			@dir_hrs = false
+		end
+		
 		# initialize dir_order
 		dir_order = 0
 		
 		# initialize success to true
 		success = true
+		
+		# verbosify
+		puts Testmin.message('running-tests')
 		
 		# loop through directories
 		mark = Benchmark.measure {

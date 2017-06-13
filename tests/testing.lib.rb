@@ -1,5 +1,5 @@
 # I like to clear the screen before each test
-if (ENV['AUTOCLEAR']) and (not ENV['CLEAR_DONE'])
+if (ENV['AUTOCLEAR']) and (not ENV['TESTMIN'])
 	system('/usr/bin/clear')
 	ENV['CLEAR_DONE'] = '1'
 end
@@ -15,6 +15,7 @@ require_relative $ut_testing['utilibase_path']
 
 # load FileUtils
 require 'fileutils'
+
 
 ###############################################################################
 # UtilibaseTesting
