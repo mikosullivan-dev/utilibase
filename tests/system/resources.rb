@@ -1,7 +1,7 @@
 #!/usr/bin/ruby -w
-system 'clear' unless ENV['clear_done']
 require_relative '../testmin.rb'
 require_relative '../testing.config.rb'
+# system 'clear' unless ENV['clear_done']
 require 'fileutils'
 
 # load built-in ruby modules

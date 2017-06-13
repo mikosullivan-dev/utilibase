@@ -1,3 +1,10 @@
+# I like to clear the screen before each test
+if ENV['AUTOCLEAR']
+	if not ENV['CLEAR_DONE']
+		# system('/usr/bin/clear')
+	end
+end
+
 # load Testmin
 require_relative './testmin.rb'
 

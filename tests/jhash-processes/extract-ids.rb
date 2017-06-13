@@ -1,6 +1,4 @@
 #!/usr/bin/ruby -w
-system 'clear' unless ENV['clear_done']
-require_relative '../testmin.rb'
 require_relative '../testing.lib.rb'
 
 # enable taint mode
