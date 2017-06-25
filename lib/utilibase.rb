@@ -1302,8 +1302,8 @@ module Utilibase::Utils
 		
 		# only process defined strings
 		if str.is_a?(String) and (not str.nil?())
-			str = str.gsub(/^[ \t\r\n]+/, '')
-			str = str.gsub(/[ \t\r\n]+$/, '')
+			str = str.gsub(/\A[ \t\r\n]+/, '')
+			str = str.gsub(/[ \t\r\n]+\z/, '')
 			str = str.gsub(/[ \t\r\n]+/, ' ')
 		end
 		
