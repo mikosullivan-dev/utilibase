@@ -481,7 +481,7 @@ class XYZ
 			el = unraveled[my_key]
 			
 			# add to hash of elements that have an id
-			if defined?(el['id'])
+			if not el['id'].nil?
 				ids[el['id']] = el
 			end
 			
