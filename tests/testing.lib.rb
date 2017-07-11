@@ -335,48 +335,6 @@ module UtilibaseTesting
 		raise test_name + ': equal [is: ' + is.to_s() + ']|[should: ' + should.to_s() + ']'
 	end
 	
-	# bool
-	def UtilibaseTesting.bool(test_name, is, should, opts={})
-		# UtilibaseTesting.hr('UtilibaseTesting.bool')
-		
-		# default options
-		opts = {'should'=>true}.merge(opts)
-		
-		# should should be defined
-		if should.nil?
-			raise ExceptionPlus::Internal.new('bool~should-not-defined', 'jzVjv', '"should" is not defined')
-		end
-		
-		# test
-		if should
-			if not is
-				UtilibaseTesting.fail(test_name, 'should be true but is not')
-			end
-		else
-			if is
-				UtilibaseTesting.fail(test_name, 'should not be true but is')
-			end
-		end
-		
-		# return
-		return true
-	end
-	
-	# bool_comp
-	# Not a test. Returns true if the values are either both true or
-	def UtilibaseTesting.bool_comp(a, b)
-		# UtilibaseTesting.hr('UtilibaseTesting.bool_comp')
-		
-		# both true
-		if a and b
-			return true
-		elsif (not a) and (not b)
-			return true
-		else
-			return false
-		end
-	end
-	
 	# record_in_current
 	def UtilibaseTesting.record_in_current(test_name, db, record_id, opts={})
 		# puts 'record_in_current'
