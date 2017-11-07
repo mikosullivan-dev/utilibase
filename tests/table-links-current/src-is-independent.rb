@@ -61,7 +61,7 @@ if true
 		sql = "insert into links_current(src_id, src_is_independent, tgt_id) values(:valid0, null, :valid1)"
 		qty = dbh.execute(sql, {'valid0'=>valid_ids[0], 'valid1'=>valid_ids[1]})
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts e.message
 		UtilibaseTesting.exception_message('not null', e, 'NOT NULL constraint failed: links_current.src_is_independent')
 	end
@@ -91,7 +91,7 @@ if true
 		sql = "insert into links_current(src_id, src_is_independent, tgt_id) values(:valid0, 2, :valid1)"
 		qty = dbh.execute(sql, {'valid0'=>valid_ids[0], 'valid1'=>valid_ids[1]})
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts e.message
 		UtilibaseTesting.exception_message('not null', e, 'CHECK constraint failed: links_current')
 	end

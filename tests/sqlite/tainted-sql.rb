@@ -25,7 +25,7 @@ rescue ExceptionPlus::Internal => e
 	UtilibaseTesting.internal_id 'internal id', e, 'bmVCL'
 rescue ExceptionPlus => e
 	raise 'should not have gotten ExceptionPlus'
-rescue Exception => e
+rescue StandardError => e
 	raise 'should not have gotten plain exception'
 end
 

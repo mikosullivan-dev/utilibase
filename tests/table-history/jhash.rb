@@ -60,7 +60,7 @@ if true
 		sql = "insert into history(version_id, record_id, jhash, links) values(:version_id, :record_id, null, '')"
 		dbh.execute_batch(sql, 'version_id'=>SecureRandom.uuid(), 'record_id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts '-------------------'
 		# puts e.message
 		# puts '-------------------'
@@ -84,7 +84,7 @@ if true
 		sql = "insert into history(version_id, record_id, jhash, links) values(:version_id, :record_id, '}', '')"
 		dbh.execute_batch(sql, 'version_id'=>SecureRandom.uuid(), 'record_id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('starts with {', e, 'CHECK constraint failed: history')
 	end
 end
@@ -105,7 +105,7 @@ if true
 		sql = "insert into history(version_id, record_id, jhash, links) values(:version_id, :record_id, '{', '')"
 		dbh.execute_batch(sql, 'version_id'=>SecureRandom.uuid(), 'record_id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('starts with {', e, 'CHECK constraint failed: history')
 	end
 end

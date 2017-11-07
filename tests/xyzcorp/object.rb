@@ -38,7 +38,7 @@ UtilibaseTesting.comp('mary-cell-phone', ids['mary-cell-phone']['location'], 'ce
 begin
 	xyz.in_current('whatever')
 	raise 'should have gotten exception'
-rescue Exception => e
+rescue StandardError => e
 	UtilibaseTesting.error_id('in_current: no such id', e, 'xyz~record~no-such-id')
 end
 
@@ -52,7 +52,7 @@ UtilibaseTesting.bool('existent row', xyz.in_current('mary'), true)
 begin
 	xyz.current('whatever')
 	raise 'should have gotten exception'
-rescue Exception => e
+rescue StandardError => e
 	UtilibaseTesting.error_id('row: no such id', e, 'xyz~row~no-such-id')
 end
 

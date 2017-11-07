@@ -177,7 +177,7 @@ if true
 		
 		# should not get this far
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('anything else is error', e, 'CHECK constraint failed: history')
 	end
 end

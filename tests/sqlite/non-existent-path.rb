@@ -18,7 +18,7 @@ begin
 	raise 'previous operation should have thrown exception'
 rescue ExceptionPlus => e
 	UtilibaseTesting.error_id('non-existent file', e, 'non-existent-db-file')
-rescue Exception => e
+rescue StandardError => e
 	puts e.message
 	raise 'should not have gotten plain exception'
 end

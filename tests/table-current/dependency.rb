@@ -96,7 +96,7 @@ if true
 		sql = "insert into current(record_id, jhash, links, dependency) values(:id, '{}', '', 'x')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts e.message
 		UtilibaseTesting.exception_message('must be only i, d, or m', e, 'CHECK constraint failed: current')
 	end
@@ -124,7 +124,7 @@ if true
 		
 		# should not get this far
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts e.message
 		UtilibaseTesting.exception_message(
 			"if dependency is 'm' then links must be ''",

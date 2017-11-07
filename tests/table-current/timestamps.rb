@@ -99,7 +99,7 @@ if true
 		sql = "insert into current(record_id, jhash, links, ts_end) values(:id, '{}', '', '2017-03-24T04:04:18+18.098Z')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		# puts e.message
 		UtilibaseTesting.exception_message('valid id', e, 'CHECK constraint failed: current')
 	end

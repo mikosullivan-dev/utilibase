@@ -33,7 +33,7 @@ if true
 		UtilibaseTesting.internal_id 'internal id', e, 'f6G9P'
 	rescue ExceptionPlus => e
 		raise 'should not have gotten ExceptionPlus'
-	rescue Exception => e
+	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end
 end
@@ -68,7 +68,7 @@ if true
 		UtilibaseTesting.internal_id 'internal id', e, 'LFZMf'
 	rescue ExceptionPlus => e
 		raise 'should not have gotten ExceptionPlus'
-	rescue Exception => e
+	rescue StandardError => e
 		puts e
 		raise 'should not have gotten plain exception'
 	end
@@ -100,7 +100,7 @@ if true
 		UtilibaseTesting.internal_id 'internal id', e, 'qkPBp'
 	rescue ExceptionPlus => e
 		raise 'should not have gotten ExceptionPlus'
-	rescue Exception => e
+	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end
 end
@@ -132,7 +132,7 @@ if true
 		UtilibaseTesting.internal_id 'internal id', e, 'QJBqK'
 	rescue ExceptionPlus => e
 		raise 'should not have gotten ExceptionPlus'
-	rescue Exception => e
+	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end
 end

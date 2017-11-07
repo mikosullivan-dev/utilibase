@@ -534,7 +534,7 @@ class XYZ
 					'dependency' => dependency,
 					'notes' => notes
 				)
-			rescue Exception => e
+			rescue StandardError => e
 				puts e.message
 				exit
 			end
@@ -573,7 +573,7 @@ class XYZ
 						'tgt'=>link_tgt,
 						'src_is_independent' => src_is_independent,
 					)
-				rescue Exception => e
+				rescue StandardError => e
 					puts e.message
 					exit
 				end

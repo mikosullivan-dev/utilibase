@@ -97,7 +97,7 @@ if true
 		sql = "insert into current(record_id, jhash, links, update_stat) values(:id, '{}', '', 'c')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('must be nil, n, or u', e, 'CHECK constraint failed: current')
 	end
 end

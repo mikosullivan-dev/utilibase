@@ -59,7 +59,7 @@ if true
 		sql = "insert into current(record_id, jhash, links) values(:id, null, '')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('starts with {', e, 'NOT NULL constraint failed: current.jhash')
 	end
 end
@@ -79,7 +79,7 @@ if true
 		sql = "insert into current(record_id, jhash, links) values(:id, '}', '')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('starts with {', e, 'CHECK constraint failed: current')
 	end
 end
@@ -99,7 +99,7 @@ if true
 		sql = "insert into current(record_id, jhash, links) values(:id, '{', '')"
 		dbh.execute_batch(sql, 'id'=>SecureRandom.uuid())
 		raise 'should have gotten exception'
-	rescue Exception => e
+	rescue StandardError => e
 		UtilibaseTesting.exception_message('ends with }', e, 'CHECK constraint failed: current')
 	end
 end
