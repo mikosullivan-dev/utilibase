@@ -17,12 +17,12 @@ db_path.taint
 begin
 	Utilibase::DBH.new(db_path)
 	raise 'previous operation should have thrown exception'
-rescue ExceptionPlus::Internal => e
+rescue StandardErrorPlus::Internal => e
 	UtilibaseTesting.error_id 'error id', e, 'tainted-db-path'
 	UtilibaseTesting.is_internal 'is internal', e
 	UtilibaseTesting.internal_id 'internal id', e, 'z7gwj'
-rescue ExceptionPlus => e
-	raise 'should not have gotten ExceptionPlus'
+rescue StandardErrorPlus => e
+	raise 'should not have gotten StandardErrorPlus'
 rescue StandardError => e
 	raise 'should not have gotten plain exception'
 end

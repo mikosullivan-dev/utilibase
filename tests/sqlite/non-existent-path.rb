@@ -16,7 +16,7 @@ FileUtils.rm_rf(db_path) or die $!
 begin
 	Utilibase::DBH.new(db_path)
 	raise 'previous operation should have thrown exception'
-rescue ExceptionPlus => e
+rescue StandardErrorPlus => e
 	UtilibaseTesting.error_id('non-existent file', e, 'non-existent-db-file')
 rescue StandardError => e
 	puts e.message

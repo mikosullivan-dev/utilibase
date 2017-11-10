@@ -27,12 +27,12 @@ if true
 	begin
 		Utilibase::DBH.create_db_file(db_dir, 'xxx')
 		raise 'previous operation should have thrown exception'
-	rescue ExceptionPlus::Internal => e
+	rescue StandardErrorPlus::Internal => e
 		UtilibaseTesting.error_id 'error id', e, 'tainted-dir'
 		UtilibaseTesting.is_internal 'is internal', e
 		UtilibaseTesting.internal_id 'internal id', e, 'f6G9P'
-	rescue ExceptionPlus => e
-		raise 'should not have gotten ExceptionPlus'
+	rescue StandardErrorPlus => e
+		raise 'should not have gotten StandardErrorPlus'
 	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end
@@ -62,12 +62,12 @@ if true
 	begin
 		Utilibase::DBH.create_db_file($ut_testing['test_dir'], db_file)
 		raise 'previous operation should have thrown exception'
-	rescue ExceptionPlus::Internal => e
+	rescue StandardErrorPlus::Internal => e
 		UtilibaseTesting.error_id 'error id', e, 'tainted-file-name'
 		UtilibaseTesting.is_internal 'is internal', e
 		UtilibaseTesting.internal_id 'internal id', e, 'LFZMf'
-	rescue ExceptionPlus => e
-		raise 'should not have gotten ExceptionPlus'
+	rescue StandardErrorPlus => e
+		raise 'should not have gotten StandardErrorPlus'
 	rescue StandardError => e
 		puts e
 		raise 'should not have gotten plain exception'
@@ -94,12 +94,12 @@ if true
 	begin
 		Utilibase::DBH.create_db_file(db_dir, 'xxx')
 		raise 'previous operation should have thrown exception'
-	rescue ExceptionPlus::Internal => e
+	rescue StandardErrorPlus::Internal => e
 		UtilibaseTesting.error_id 'error id', e, 'non-existent-dir'
 		UtilibaseTesting.is_internal 'is internal', e
 		UtilibaseTesting.internal_id 'internal id', e, 'qkPBp'
-	rescue ExceptionPlus => e
-		raise 'should not have gotten ExceptionPlus'
+	rescue StandardErrorPlus => e
+		raise 'should not have gotten StandardErrorPlus'
 	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end
@@ -126,12 +126,12 @@ if true
 	begin
 		Utilibase::DBH.create_db_file($ut_testing['test_dir'], db_file)
 		raise 'previous operation should have thrown exception'
-	rescue ExceptionPlus::Internal => e
+	rescue StandardErrorPlus::Internal => e
 		UtilibaseTesting.error_id 'error id', e, 'db-file-already-exists'
 		UtilibaseTesting.is_internal 'is internal', e
 		UtilibaseTesting.internal_id 'internal id', e, 'QJBqK'
-	rescue ExceptionPlus => e
-		raise 'should not have gotten ExceptionPlus'
+	rescue StandardErrorPlus => e
+		raise 'should not have gotten StandardErrorPlus'
 	rescue StandardError => e
 		raise 'should not have gotten plain exception'
 	end

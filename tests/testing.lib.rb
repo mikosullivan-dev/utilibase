@@ -42,7 +42,7 @@ module UtilibaseTesting
 	end
 	# error id
 	def UtilibaseTesting.error_id(test_name, e, msgid)
-		raise TypeError, 'not-ExceptionPlus' unless e.is_a?(ExceptionPlus)
+		raise TypeError, 'not-StandardErrorPlus' unless e.is_a?(StandardErrorPlus)
 		
 		# check error id
 		unless e.error_id == msgid
@@ -56,11 +56,11 @@ module UtilibaseTesting
 		
 		# check internal state
 		if opts['should']
-			if not e.is_a?(ExceptionPlus::Internal)
+			if not e.is_a?(StandardErrorPlus::Internal)
 				raise 'internal-not-true: ' + test_name
 			end
 		else
-			if e.is_a?(ExceptionPlus::Internal)
+			if e.is_a?(StandardErrorPlus::Internal)
 				raise 'internal-true: ' + test_name
 			end
 		end
@@ -68,7 +68,7 @@ module UtilibaseTesting
 	
 	# internal_id
 	def UtilibaseTesting.internal_id(test_name, e, internal_id)
-		raise TypeError, 'not-ExceptionPlus' unless e.is_a?(ExceptionPlus::Internal)
+		raise TypeError, 'not-StandardErrorPlus' unless e.is_a?(StandardErrorPlus::Internal)
 		
 		# check error id
 		unless e.internal_id == internal_id
@@ -607,7 +607,7 @@ class XYZ
 		
 		# if no record, raise exception
 		if record.nil?
-			raise ExceptionPlus::Internal.new('xyz~record~no-such-id', 'WkTFp', 'no such id: ' + id)
+			raise StandardErrorPlus::Internal.new('xyz~record~no-such-id', 'WkTFp', 'no such id: ' + id)
 		end
 		
 		# return
@@ -648,7 +648,7 @@ class XYZ
 		# if no record, raise exception
 		if record.nil?
 			# raise 'in-current-no-such-id: no such record in xyz struct: ' + id
-			raise ExceptionPlus::Internal.new('xyz~row~no-such-id', 'LJLZ7', 'no such id: ' + id)
+			raise StandardErrorPlus::Internal.new('xyz~row~no-such-id', 'LJLZ7', 'no such id: ' + id)
 		end
 		
 		# get row

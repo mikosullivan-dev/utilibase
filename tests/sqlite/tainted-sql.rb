@@ -19,12 +19,12 @@ sql.taint
 begin
 	dbh.get_first_value(sql)
 	raise 'previous operation should have thrown exception'
-rescue ExceptionPlus::Internal => e
+rescue StandardErrorPlus::Internal => e
 	UtilibaseTesting.error_id 'error id', e, 'tainted-sql'
 	UtilibaseTesting.is_internal 'is internal', e
 	UtilibaseTesting.internal_id 'internal id', e, 'bmVCL'
-rescue ExceptionPlus => e
-	raise 'should not have gotten ExceptionPlus'
+rescue StandardErrorPlus => e
+	raise 'should not have gotten StandardErrorPlus'
 rescue StandardError => e
 	raise 'should not have gotten plain exception'
 end

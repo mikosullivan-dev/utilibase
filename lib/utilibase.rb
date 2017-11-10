@@ -996,7 +996,7 @@ class Utilibase::DBH < SQLite3::Database
 		
 		# refuse to run tainted sql
 		if sql.tainted?
-			raise ExceptionPlus::Internal.new('tainted-sql', 'bmVCL', 'will not run tainted sql')
+			raise StandardErrorPlus::Internal.new('tainted-sql', 'bmVCL', 'will not run tainted sql')
 		end
 		
 		# run super method
@@ -1010,17 +1010,17 @@ class Utilibase::DBH < SQLite3::Database
 	def self.create_db_file(db_dir, db_name)
 		# dir must not be tainted
 		if db_dir.tainted?
-			raise ExceptionPlus::Internal.new('tainted-dir', 'f6G9P', 'directory for new database file is tainted')
+			raise StandardErrorPlus::Internal.new('tainted-dir', 'f6G9P', 'directory for new database file is tainted')
 		end
 		
 		# file name must not be tainted
 		if db_name.tainted?
-			raise ExceptionPlus::Internal.new('tainted-file-name', 'LFZMf', 'file name for new database file is tainted')
+			raise StandardErrorPlus::Internal.new('tainted-file-name', 'LFZMf', 'file name for new database file is tainted')
 		end
 		
 		# dir must exist
 		if not File.directory?(db_dir)
-			raise ExceptionPlus::Internal.new('non-existent-dir', 'qkPBp', 'do not have a directory: ' + db_dir)
+			raise StandardErrorPlus::Internal.new('non-existent-dir', 'qkPBp', 'do not have a directory: ' + db_dir)
 		end
 		
 		# full path
@@ -1029,7 +1029,7 @@ class Utilibase::DBH < SQLite3::Database
 		
 		# if file already exists, throw exception
 		if File.exist?(db_path)
-			raise ExceptionPlus::Internal.new('db-file-already-exists', 'QJBqK', 'there is already a database file as ' + db_path)
+			raise StandardErrorPlus::Internal.new('db-file-already-exists', 'QJBqK', 'there is already a database file as ' + db_path)
 		end
 		
 		# touch file
@@ -1105,9 +1105,9 @@ end
 
 
 ################################################################################
-# ExceptionPlus
+# StandardErrorPlus
 #
-class ExceptionPlus < StandardError
+class StandardErrorPlus < StandardError
 	# attributes
 	attr_reader :error_id
 	attr_reader :id
@@ -1125,14 +1125,14 @@ class ExceptionPlus < StandardError
 	end
 end
 #
-# ExceptionPlus
+# StandardErrorPlus
 ################################################################################
 
 
 ################################################################################
-# ExceptionPlus::Internal
+# StandardErrorPlus::Internal
 #
-class ExceptionPlus::Internal < ExceptionPlus
+class StandardErrorPlus::Internal < StandardErrorPlus
 	# attributes
 	attr_reader :internal_id
 
@@ -1146,7 +1146,7 @@ class ExceptionPlus::Internal < ExceptionPlus
 	end
 end
 #
-# ExceptionPlus
+# StandardErrorPlus
 ################################################################################
 
 
@@ -1185,7 +1185,7 @@ module Utilibase::Utils
 		
 		# else error
 		else
-			raise ExceptionPlus::Internal.new('unravel-not-hash-or-array', 'k1cgC', 'attempt to unravel a structure that is neither a hash nor an array')
+			raise StandardErrorPlus::Internal.new('unravel-not-hash-or-array', 'k1cgC', 'attempt to unravel a structure that is neither a hash nor an array')
 		end
 		
 		# return
@@ -1317,17 +1317,17 @@ module Utilibase::Utils
 		
 		# path required
 		if db_path.nil?
-			raise ExceptionPlus::Internal.new('missing-db-path', 'gKpHv', 'missing path')
+			raise StandardErrorPlus::Internal.new('missing-db-path', 'gKpHv', 'missing path')
 		end
 		
 		# path may not be tainted
 		if db_path.tainted?
-			raise ExceptionPlus::Internal.new('tainted-db-path', 'z7gwj', 'tainted path' + db_path)
+			raise StandardErrorPlus::Internal.new('tainted-db-path', 'z7gwj', 'tainted path' + db_path)
 		end
 		
 		# path must exist and not be a directory
 		if not FileTest.exist?(db_path)
-			raise ExceptionPlus::Internal.new('non-existent-db-file', '6g1Sp', 'do not have file ' + db_path)
+			raise StandardErrorPlus::Internal.new('non-existent-db-file', '6g1Sp', 'do not have file ' + db_path)
 		end
 	end
 	
@@ -1491,7 +1491,7 @@ class Utilibase::Record
 
 		# check that db is a Utilibase object
 		if not db.is_a?(Utilibase)
-			raise ExceptionPlus::Internal.new('non-utilibase-db-object', 'DKtkx', 'db param is not a Utilibase object')
+			raise StandardErrorPlus::Internal.new('non-utilibase-db-object', 'DKtkx', 'db param is not a Utilibase object')
 		end
 
 		# set attributes
@@ -1591,7 +1591,7 @@ class Utilibase::Record
 		
 		# should have gotten existing
 		if existing.nil?
-			raise ExceptionPlus::Internal.new('no-existing-record', 'tVkzR', 'did not get record that is supposed to exist')
+			raise StandardErrorPlus::Internal.new('no-existing-record', 'tVkzR', 'did not get record that is supposed to exist')
 		end
 		
 		# parse json
@@ -1658,7 +1658,7 @@ class Utilibase::Record
 		
 		# should have gotten a jhash
 		if jhash.nil?
-			raise ExceptionPlus::Internal.new('get-fields~no-record', 'VxCd8', 'get_fields did not find the record in the database')
+			raise StandardErrorPlus::Internal.new('get-fields~no-record', 'VxCd8', 'get_fields did not find the record in the database')
 		end
 		
 		# parse jhash
@@ -1666,7 +1666,7 @@ class Utilibase::Record
 		
 		# should be a hash
 		if not jhash.is_a?(Hash)
-			raise ExceptionPlus::Internal.new('get-fields~jhash-not-hash', 'D32bQ', 'get_fields did not get a hash for jhash')
+			raise StandardErrorPlus::Internal.new('get-fields~jhash-not-hash', 'D32bQ', 'get_fields did not get a hash for jhash')
 		end
 		
 		# initialize return hash
